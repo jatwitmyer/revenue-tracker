@@ -10,6 +10,7 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
   __tablename__ = 'users'
+  #validations
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String, unique=True)
@@ -18,15 +19,15 @@ class User(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
-  company = db.relationship('Company', back_populates = 'user')
+  company = db.relationship('Company', back_populates = 'user', cascade='all, delete-orphan')
   #serialization
-  #validations
-  
+
   def __repr__(self):
     return f'\n\n<User {self.id}:\nUsername: {self.username}\nPassword: {self.password}\nCompany ID: {self.company_id}>'
 
 class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
+  #validations
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, unique=True)
@@ -38,13 +39,14 @@ class Company(db.Model, SerializerMixin):
   product = db.relationship('Product', back_populates = 'company')
   store = db.relationship('Store', back_populates = 'company')
   #serialization
-  #validations
+
   
   def __repr__(self):
     return f'\n\n<>'
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
+  #validations
 
   id = db.Column(db.Integer, primary_key=True)
   location = db.Column(db.String)
@@ -52,17 +54,19 @@ class Store(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
-  company = db.relationship('Company', back_populates = 'store')
+  company = db.relationship('Company', back_populates = 'store', cascade='all, delete-orphan')
+
   sale = db.relationship('Sale', back_populates = 'store')
   inventory = db.relationship('InventoryItem', back_populates = 'store')
   #serialization
-  #validations
+
   
   def __repr__(self):
     return f'\n\n<>'
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
+  #validations
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
@@ -72,16 +76,18 @@ class Product(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
-  company = db.relationship('Company', back_populates = 'product')
+  company = db.relationship('Company', back_populates = 'product', cascade='all, delete-orphan')
   sale = db.relationship('Sale', back_populates = 'product')
+  inventory = db.relationship('InventoryItem', back_populates = 'product')
   #serialization
-  #validations
+
   
   def __repr__(self):
     return f'\n\n<>'
 
 class Sale(db.Model, SerializerMixin):
   __tablename__ = 'sales'
+  #validations
 
   id = db.Column(db.Integer, primary_key=True)
   price = db.Column(db.Integer)
@@ -91,18 +97,18 @@ class Sale(db.Model, SerializerMixin):
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationship
-  company = db.relationship('Company', back_populates = 'sale')
-  store = db.relationship('Store', back_populates = 'sale')
-  product = db.relationship('Product', back_populates = 'sale')
+  company = db.relationship('Company', back_populates = 'sale', cascade='all, delete-orphan')
+  store = db.relationship('Store', back_populates = 'sale', cascade='all, delete-orphan')
+  product = db.relationship('Product', back_populates = 'sale', cascade='all, delete-orphan')
   #serialization
 
-  #validations
   
   def __repr__(self):
     return f'\n\n<>'
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
+  #validations
 
   id = db.Column(db.Integer, primary_key=True)
   is_in_stock = db.Column(db.Boolean)  
@@ -112,10 +118,10 @@ class InventoryItem(db.Model, SerializerMixin):
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationship
-  company = db.relationship('Company', back_populates = 'inventory')
-  store = db.relationship('Store', back_populates = 'inventory')
+  company = db.relationship('Company', back_populates = 'inventory', cascade='all, delete-orphan')
+  store = db.relationship('Store', back_populates = 'inventory', cascade='all, delete-orphan')
+  product = db.relationship('Product', back_populates = 'inventory', cascade='all, delete-orphan')
   #serialization
-  #validations
   
   def __repr__(self):
     return f'\n\n<>'
