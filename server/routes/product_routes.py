@@ -20,8 +20,9 @@ def products():
         try:
             new_product_obj = Product(
                 name = form_data['name'],
-                manufacturing_cost = form_data['manufacturing_cost'] #,
-                # company_id = form_data['company_id']
+                manufacturing_cost = form_data['manufacturing_cost'],
+                serial_number = form_data['serial_number'],
+                company_id = form_data['company_id']
             )
 
             db.session.add(new_product_obj)
