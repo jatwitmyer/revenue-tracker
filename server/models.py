@@ -10,7 +10,7 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
   __tablename__ = 'users'
-  serialize_rules= ('-company.user')
+  serialize_rules= ('-company.users', '-stores.users', '-sales.users', '-products.users', '-inventory.users' )
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String, unique=True)
@@ -30,6 +30,7 @@ class User(db.Model, SerializerMixin):
 
 class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
+  serialize_rules = ('-users.company', '-sales.company', '-inventory.company', '-products.company', '-stores.company')
 
 
   id = db.Column(db.Integer, primary_key=True)
@@ -47,6 +48,7 @@ class Company(db.Model, SerializerMixin):
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
+  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-products.store', '-users.stores')
 
   id = db.Column(db.Integer, primary_key=True)
   location = db.Column(db.String)
@@ -65,6 +67,7 @@ class Store(db.Model, SerializerMixin):
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
+  serialize_rules = ('-company.products', '-sales.product', '-inventory.product', '-stores.products', '-users.products')
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
@@ -86,7 +89,7 @@ class Product(db.Model, SerializerMixin):
 
 class Sale(db.Model, SerializerMixin):
   __tablename__ = 'sales'
-
+  serialize_rules = ('-company.sales', '-store.sales', '-product.sales', '-users.sales')
 
   id = db.Column(db.Integer, primary_key=True)
   price = db.Column(db.Integer)
@@ -106,7 +109,7 @@ class Sale(db.Model, SerializerMixin):
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
-  #validations
+  serialize_rules = ('-company.inventory', '-store.inventory', '-product.inventory', '-users.inventory')
 
   id = db.Column(db.Integer, primary_key=True)
   is_in_stock = db.Column(db.Boolean)  
