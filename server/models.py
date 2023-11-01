@@ -5,9 +5,7 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from sqlalchemy_serializer import SerializerMixin
 
 convention = {"fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s"}
-
 metadata = MetaData(naming_convention=convention)
-
 db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
@@ -20,6 +18,7 @@ class User(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
+
   #serialization
   #validations
   
@@ -60,7 +59,7 @@ class Product(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
   serial_number = db.Column(db.Integer)
-  manufacturing_cost = db.Column(db.int) #what if this changes over time
+  manufacturing_cost = db.Column(db.Integer) #what if this changes over time
 
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
@@ -97,7 +96,7 @@ class InventoryItem(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('inventory.id'))
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
-  
+
   #relationship
   #serialization
   #validations

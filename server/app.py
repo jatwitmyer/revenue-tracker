@@ -2,7 +2,7 @@ from flask import Flask, make_response #, request
 from flask_migrate import Migrate
 
 # import db from models
-from models import db, User
+from models import db, User, Company, Store, Product, Sale, InventoryItem
 
 app = Flask(__name__)
 
