@@ -123,9 +123,6 @@ class InventoryItem(db.Model, SerializerMixin):
   store = db.relationship('Store', back_populates = 'inventory')
   product = db.relationship('Product', back_populates = 'inventory')
   users = association_proxy('companies', 'users')
-
-  #serialization
-
   
   def __repr__(self):
     return f'\n\n<>'
