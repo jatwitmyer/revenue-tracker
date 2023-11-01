@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
-
+  company = db.relationship('Company', back_populates = 'user')
   #serialization
   #validations
   
@@ -32,6 +32,11 @@ class Company(db.Model, SerializerMixin):
   name = db.Column(db.String, unique=True)
 
   #relationship
+  user = db.relationship('User', back_populates = 'company')
+  sale = db.relationship('Sale', back_populates = 'company')
+  inventory = db.relationship('InventoryItem', back_populates = 'company')
+  product = db.relationship('Product', back_populates = 'company')
+  store = db.relationship('Store', back_populates = 'company')
   #serialization
   #validations
   
@@ -47,6 +52,9 @@ class Store(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
+  company = db.relationship('Company', back_populates = 'store')
+  sale = db.relationship('Sale', back_populates = 'store')
+  inventory = db.relationship('InventoryItem', back_populates = 'store')
   #serialization
   #validations
   
@@ -64,6 +72,8 @@ class Product(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
+  company = db.relationship('Company', back_populates = 'product')
+  sale = db.relationship('Sale', back_populates = 'product')
   #serialization
   #validations
   
@@ -81,7 +91,11 @@ class Sale(db.Model, SerializerMixin):
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationship
+  company = db.relationship('Company', back_populates = 'sale')
+  store = db.relationship('Store', back_populates = 'sale')
+  product = db.relationship('Product', back_populates = 'sale')
   #serialization
+
   #validations
   
   def __repr__(self):
@@ -98,6 +112,8 @@ class InventoryItem(db.Model, SerializerMixin):
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationship
+  company = db.relationship('Company', back_populates = 'inventory')
+  store = db.relationship('Store', back_populates = 'inventory')
   #serialization
   #validations
   
