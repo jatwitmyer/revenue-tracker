@@ -2,15 +2,15 @@ from flask import Flask, make_response, request
 from models import db, User, Company, Store, Product, Sale, InventoryItem
 from config import app
 
-@app.route('/products', methods = ['GET', 'POST'])
-def products():
+@app.route('/sales', methods = ['GET', 'POST'])
+def sales():
     
     if request.method == 'GET':
-        products = Product.query.all()
-        product_dict = [product.to_dict(rules = ('-sale', '-inventory_item')) for product in products]
+        sales = Sale.query.all()
+        sales_dict = [sale.to_dict(rules = ('-product', '-store', '-company')) for sale in sales]
 
         response = make_response(
-            product_dict,
+            sales_dict,
             200
         )
 
@@ -18,38 +18,38 @@ def products():
         form_data = request.get_json()
 
         try:
-            new_product_obj = Product(
-                name = form_data['name'],
-                manufacturing_cost = form_data['manufacturing_cost'],
-                serial_number = form_data['serial_number'],
+            new_sale_obj = Sale(
+                price = form_data['price'],
+                store_id = form_data['store_id'],
+                product_id = form_data['product_id'],
                 company_id = form_data['company_id']
             )
 
-            db.session.add(new_product_obj)
+            db.session.add(new_sale_obj)
             db.session.commit()
 
             response = make_response(
-                new_product_obj.to_dict(),
+                new_sale_obj.to_dict(),
                 201
             )
         except ValueError:
             response = make_response(
-                {"errors": ["validation errors in POST to products"]},
+                {"errors": ["validation errors in POST to sale"]},
                 400
             )
             return response
 
     return response
 
-@app.route('/products/<int:id>', methods = ['GET', 'PATCH', 'DELETE'])
-def products_by_id(id):
-    product = Product.query.filter(Product.id == id).first()
+@app.route('/sales/<int:id>', methods = ['GET', 'PATCH', 'DELETE'])
+def sales_by_id(id):
+    sale = Sale.query.filter(Sale.id == id).first()
 
-    if product:
+    if sale:
         if request.method == 'GET':
 
             response = make_response(
-                product.to_dict(),
+                sale.to_dict(),
                 200
             )
 
@@ -58,24 +58,24 @@ def products_by_id(id):
 
             try:
                 for attr in form_data:
-                    setattr(product, attr, form_data.get(attr))
+                    setattr(sale, attr, form_data.get(attr))
                 
                 db.session.commit()
 
                 response = make_response(
-                    product.to_dict(rules = ('-sale', '-inventory_item')),
+                    sale.to_dict(rules = ('-product', '-store', '-company')),
                     202
                 )
 
             except ValueError:
                 response = make_response(
-                    {"errors": ["validation errors in PATCH to products id"]},
+                    {"errors": ["validation errors in PATCH to sale id"]},
                     400
                 )
                 return response
             
         elif request.method == 'DELETE':
-            db.session.delete(product)
+            db.session.delete(sale)
             db.session.commit()
 
             response = make_response(
@@ -85,7 +85,7 @@ def products_by_id(id):
     
     else:
         response = make_response(
-            {"error": "Product not found"},
+            {"error": "Sale not found"},
             404
         )
 
