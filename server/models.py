@@ -10,7 +10,7 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
   __tablename__ = 'users'
-  #validations
+  serialize_rules= ('-company.user')
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String, unique=True)
@@ -20,14 +20,14 @@ class User(db.Model, SerializerMixin):
 
   #relationship
   company = db.relationship('Company', back_populates = 'user', cascade='all, delete-orphan')
-  #serialization
+
 
   def __repr__(self):
     return f'\n\n<User {self.id}:\nUsername: {self.username}\nPassword: {self.password}\nCompany ID: {self.company_id}>'
 
 class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
-  #validations
+
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, unique=True)
@@ -38,7 +38,7 @@ class Company(db.Model, SerializerMixin):
   inventory = db.relationship('InventoryItem', back_populates = 'company')
   product = db.relationship('Product', back_populates = 'company')
   store = db.relationship('Store', back_populates = 'company')
-  #serialization
+
 
   
   def __repr__(self):
@@ -46,7 +46,7 @@ class Company(db.Model, SerializerMixin):
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
-  #validations
+
 
   id = db.Column(db.Integer, primary_key=True)
   location = db.Column(db.String)
@@ -58,7 +58,7 @@ class Store(db.Model, SerializerMixin):
 
   sale = db.relationship('Sale', back_populates = 'store')
   inventory = db.relationship('InventoryItem', back_populates = 'store')
-  #serialization
+
 
   
   def __repr__(self):
@@ -66,7 +66,7 @@ class Store(db.Model, SerializerMixin):
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
-  #validations
+
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
@@ -77,9 +77,10 @@ class Product(db.Model, SerializerMixin):
 
   #relationship
   company = db.relationship('Company', back_populates = 'product', cascade='all, delete-orphan')
+
   sale = db.relationship('Sale', back_populates = 'product')
   inventory = db.relationship('InventoryItem', back_populates = 'product')
-  #serialization
+
 
   
   def __repr__(self):
@@ -87,7 +88,7 @@ class Product(db.Model, SerializerMixin):
 
 class Sale(db.Model, SerializerMixin):
   __tablename__ = 'sales'
-  #validations
+
 
   id = db.Column(db.Integer, primary_key=True)
   price = db.Column(db.Integer)
@@ -99,8 +100,9 @@ class Sale(db.Model, SerializerMixin):
   #relationship
   company = db.relationship('Company', back_populates = 'sale', cascade='all, delete-orphan')
   store = db.relationship('Store', back_populates = 'sale', cascade='all, delete-orphan')
+
   product = db.relationship('Product', back_populates = 'sale', cascade='all, delete-orphan')
-  #serialization
+  
 
   
   def __repr__(self):
@@ -120,6 +122,7 @@ class InventoryItem(db.Model, SerializerMixin):
   #relationship
   company = db.relationship('Company', back_populates = 'inventory', cascade='all, delete-orphan')
   store = db.relationship('Store', back_populates = 'inventory', cascade='all, delete-orphan')
+
   product = db.relationship('Product', back_populates = 'inventory', cascade='all, delete-orphan')
   #serialization
   
