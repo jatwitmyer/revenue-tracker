@@ -10,6 +10,7 @@ db = SQLAlchemy(metadata=metadata)
 
 class User(db.Model, SerializerMixin):
   __tablename__ = 'users'
+  serialize_rules= ('-company.users', '-stores.users', '-sales.users', '-products.users', '-inventory.users' )
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String, unique=True)
@@ -18,28 +19,36 @@ class User(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
+  company = db.relationship('Company', back_populates = 'users')
+  stores = association_proxy('companies', 'stores')
+  sales = association_proxy('companies', 'sales')
+  products = association_proxy('companies', 'products')
+  inventory = association_proxy('companies', 'inventory')
 
-  #serialization
-  #validations
-  
   def __repr__(self):
     return f'\n\n<User {self.id}:\nUsername: {self.username}\nPassword: {self.password}\nCompany ID: {self.company_id}>'
 
 class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
+  serialize_rules = ('-users.company', '-sales.company', '-inventory.company', '-products.company', '-stores.company')
+
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, unique=True)
 
   #relationship
-  #serialization
-  #validations
-  
+  users = db.relationship('User', back_populates = 'company', cascade='all, delete-orphan')
+  sales = db.relationship('Sale', back_populates = 'company', cascade='all, delete-orphan')
+  inventory = db.relationship('InventoryItem', back_populates = 'company', cascade='all, delete-orphan')
+  products = db.relationship('Product', back_populates = 'company', cascade='all, delete-orphan')
+  stores = db.relationship('Store', back_populates = 'company', cascade='all, delete-orphan')
+
   def __repr__(self):
     return f'\n\n<>'
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
+  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-products.store', '-users.stores')
 
   id = db.Column(db.Integer, primary_key=True)
   location = db.Column(db.String)
@@ -47,14 +56,18 @@ class Store(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
-  #serialization
-  #validations
-  
+  company = db.relationship('Company', back_populates = 'stores')
+  sales = db.relationship('Sale', back_populates = 'store', cascade='all, delete-orphan')
+  inventory = db.relationship('InventoryItem', back_populates = 'store', cascade='all, delete-orphan')
+  products = association_proxy('inventory', 'products')
+  users = association_proxy('companies', 'users')
+
   def __repr__(self):
     return f'\n\n<>'
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
+  serialize_rules = ('-company.products', '-sales.product', '-inventory.product', '-stores.products', '-users.products')
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
@@ -64,14 +77,19 @@ class Product(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationship
-  #serialization
-  #validations
-  
+  company = db.relationship('Company', back_populates = 'products')
+  sales = db.relationship('Sale', back_populates = 'product', cascade='all, delete-orphan')
+  inventory = db.relationship('InventoryItem', back_populates = 'product', cascade='all, delete-orphan')
+  stores = association_proxy('inventory', 'stores')
+  users = association_proxy('companies', 'users')
+
+
   def __repr__(self):
     return f'\n\n<>'
 
 class Sale(db.Model, SerializerMixin):
   __tablename__ = 'sales'
+  serialize_rules = ('-company.sales', '-store.sales', '-product.sales', '-users.sales')
 
   id = db.Column(db.Integer, primary_key=True)
   price = db.Column(db.Integer)
@@ -80,15 +98,18 @@ class Sale(db.Model, SerializerMixin):
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
-  #relationship
-  #serialization
-  #validations
+  #relationships
+  company = db.relationship('Company', back_populates = 'sales')
+  store = db.relationship('Store', back_populates = 'sale')
+  product = db.relationship('Product', back_populates = 'sale')
+  users = association_proxy('companies', 'users')
   
   def __repr__(self):
     return f'\n\n<>'
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
+  serialize_rules = ('-company.inventory', '-store.inventory', '-product.inventory', '-users.inventory')
 
   id = db.Column(db.Integer, primary_key=True)
   is_in_stock = db.Column(db.Boolean)  
@@ -97,9 +118,11 @@ class InventoryItem(db.Model, SerializerMixin):
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
-  #relationship
-  #serialization
-  #validations
+  #relationships
+  company = db.relationship('Company', back_populates = 'inventory')
+  store = db.relationship('Store', back_populates = 'inventory')
+  product = db.relationship('Product', back_populates = 'inventory')
+  users = association_proxy('companies', 'users')
   
   def __repr__(self):
     return f'\n\n<>'
