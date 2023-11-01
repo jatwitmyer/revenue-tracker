@@ -36,11 +36,11 @@ class Company(db.Model, SerializerMixin):
   name = db.Column(db.String, unique=True)
 
   #relationship
-  users = db.relationship('User', back_populates = 'company')
-  sales = db.relationship('Sale', back_populates = 'company')
-  inventory = db.relationship('InventoryItem', back_populates = 'company')
-  products = db.relationship('Product', back_populates = 'company')
-  stores = db.relationship('Store', back_populates = 'company')
+  users = db.relationship('User', back_populates = 'company', cascade='all, delete-orphan')
+  sales = db.relationship('Sale', back_populates = 'company', cascade='all, delete-orphan')
+  inventory = db.relationship('InventoryItem', back_populates = 'company', cascade='all, delete-orphan')
+  products = db.relationship('Product', back_populates = 'company', cascade='all, delete-orphan')
+  stores = db.relationship('Store', back_populates = 'company', cascade='all, delete-orphan')
 
   def __repr__(self):
     return f'\n\n<>'
@@ -55,8 +55,8 @@ class Store(db.Model, SerializerMixin):
 
   #relationship
   company = db.relationship('Company', back_populates = 'stores')
-  sales = db.relationship('Sale', back_populates = 'store')
-  inventory = db.relationship('InventoryItem', back_populates = 'store')
+  sales = db.relationship('Sale', back_populates = 'store', cascade='all, delete-orphan')
+  inventory = db.relationship('InventoryItem', back_populates = 'store', cascade='all, delete-orphan')
   products = association_proxy('inventory', 'products')
   users = association_proxy('companies', 'users')
 
@@ -75,8 +75,8 @@ class Product(db.Model, SerializerMixin):
 
   #relationship
   company = db.relationship('Company', back_populates = 'products')
-  sales = db.relationship('Sale', back_populates = 'product')
-  inventory = db.relationship('InventoryItem', back_populates = 'product')
+  sales = db.relationship('Sale', back_populates = 'product', cascade='all, delete-orphan')
+  inventory = db.relationship('InventoryItem', back_populates = 'product', cascade='all, delete-orphan')
   stores = association_proxy('inventory', 'stores')
   users = association_proxy('companies', 'users')
 
