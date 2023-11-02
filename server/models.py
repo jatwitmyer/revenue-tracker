@@ -18,7 +18,7 @@ class User(db.Model, SerializerMixin):
 
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
-  #relationship
+  #relationships
   company = db.relationship('Company', back_populates = 'users')
   stores = association_proxy('companies', 'stores')
   sales = association_proxy('companies', 'sales')
@@ -32,11 +32,10 @@ class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
   serialize_rules = ('-users.company', '-sales.company', '-inventory.company', '-products.company', '-stores.company')
 
-
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, unique=True)
 
-  #relationship
+  #relationships
   users = db.relationship('User', back_populates = 'company', cascade='all, delete-orphan')
   sales = db.relationship('Sale', back_populates = 'company', cascade='all, delete-orphan')
   inventory = db.relationship('InventoryItem', back_populates = 'company', cascade='all, delete-orphan')
@@ -55,7 +54,7 @@ class Store(db.Model, SerializerMixin):
 
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
-  #relationship
+  #relationships
   company = db.relationship('Company', back_populates = 'stores')
   sales = db.relationship('Sale', back_populates = 'store', cascade='all, delete-orphan')
   inventory = db.relationship('InventoryItem', back_populates = 'store', cascade='all, delete-orphan')
@@ -72,11 +71,11 @@ class Product(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
   serial_number = db.Column(db.Integer)
-  manufacturing_cost = db.Column(db.Integer) #what if this changes over time
+  manufacturing_cost = db.Column(db.Integer) # what if this changes over time
 
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
-  #relationship
+  #relationships
   company = db.relationship('Company', back_populates = 'products')
   sales = db.relationship('Sale', back_populates = 'product', cascade='all, delete-orphan')
   inventory = db.relationship('InventoryItem', back_populates = 'product', cascade='all, delete-orphan')
@@ -100,8 +99,8 @@ class Sale(db.Model, SerializerMixin):
 
   #relationships
   company = db.relationship('Company', back_populates = 'sales')
-  store = db.relationship('Store', back_populates = 'sale')
-  product = db.relationship('Product', back_populates = 'sale')
+  store = db.relationship('Store', back_populates = 'sales')
+  product = db.relationship('Product', back_populates = 'sales')
   users = association_proxy('companies', 'users')
   
   def __repr__(self):
@@ -114,7 +113,7 @@ class InventoryItem(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   is_in_stock = db.Column(db.Boolean)  
 
-  company_id = db.Column(db.Integer, db.ForeignKey('inventory.id'))
+  company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
@@ -123,9 +122,6 @@ class InventoryItem(db.Model, SerializerMixin):
   store = db.relationship('Store', back_populates = 'inventory')
   product = db.relationship('Product', back_populates = 'inventory')
   users = association_proxy('companies', 'users')
-
-  #serialization
-
   
   def __repr__(self):
     return f'\n\n<>'
