@@ -45,37 +45,52 @@ def create_products():
     p = Product(
       name = fake.ecommerce_name(),
       serial_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-      manufacturing_cost = fake.ecommerce_price() #"need" to make this smaller than sale price
+      manufacturing_cost = str(randint(5, 99)) + fake.random_element(elements=('.00', '.50', '.99')) #"need" to make this smaller than sale price
     )
     products.append(p)
   return products
-
-def create_sales():
-  sales = []
-  for _ in range(40):
-    price = fake.ecommerce_price(),
-    manufacturing_cost = fake.ecommerce_price(),
-    sa = Sale(
-      confirmation_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-      price = price,
-      manufacturing_cost = manufacturing_cost,
-      profit_margin = price - manufacturing_cost,
-      product_id = rc(products).id,
-      store_id = rc(stores).id
-    )
-    sales.append(sa)
-  return sales
 
 def create_inventory_items():
   inventory_items = []
   for _ in range(40):
     i = InventoryItem(
-      price = fake.ecommerce_price(),
+      price = float(str(randint(5, 99)) + fake.random_element(elements=('.00', '.50', '.99'))),
       product_id = rc(products).id,
       store_id = rc(stores).id
     )
     inventory_items.append(i)
   return inventory_items
+
+def create_sales():
+  sales = []
+  for _ in range(40):
+    product_id = rc(products).id
+    store_id = rc(stores).id
+    manufacturing_cost = 0
+
+    #find the product id that matches and grab the manufacturing cost
+    for product in products:
+      if product.id == product_id:
+        manufacturing_cost = product.manufacturing_cost
+    # print(manufacturing_cost)
+
+    for inventory_item in inventory_items:
+      if inventory_item.store_id == store_id:
+        price = inventory_item.price
+
+
+    sa = Sale(
+      confirmation_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+      # profit_margin = (int(price) - int(manufacturing_cost)),
+      product_id = product_id,
+      store_id = store_id,
+      price = price,
+      manufacturing_cost = manufacturing_cost,
+      profit_margin = round((price - manufacturing_cost), 2)
+    )
+    sales.append(sa)
+  return sales
+
 
 #sales and inventory are both joining products and stores from different companies right now
 
@@ -110,14 +125,15 @@ if __name__ == '__main__':
     db.session.add_all(products)
     db.session.commit()
 
+    print("Seeding inventory items...")
+    inventory_items = create_inventory_items()
+    db.session.add_all(inventory_items)
+    db.session.commit()
+
     print("Seeding sales...")
     sales = create_sales()
     db.session.add_all(sales)
     db.session.commit()
 
-    print("Seeding inventory items...")
-    inventory_items = create_inventory_items()
-    db.session.add_all(inventory_items)
-    db.session.commit()
 
     print("Done seeding!")
