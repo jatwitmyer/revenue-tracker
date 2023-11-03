@@ -19,7 +19,7 @@ def inventory():
 
         try:
             new_inventory_obj = InventoryItem(
-                is_in_stock = form_data['is_in_stock'],
+                price = form_data['price'],
                 store_id = form_data['store_id'],
                 product_id = form_data['product_id'],
                 company_id = form_data['company_id']

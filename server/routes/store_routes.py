@@ -12,7 +12,7 @@ def stores():
         form_data = request.get_json()
     try:
         new_store = Store(
-        location = form_data['location'],
+        address = form_data['address'],
         company_id = form_data['company_id']
         )
         db.session.add(new_store)

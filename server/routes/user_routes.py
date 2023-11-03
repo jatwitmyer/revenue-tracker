@@ -12,8 +12,8 @@ def users():
         form_data = request.get_json()
     try:
         new_user = User(
-        location = form_data['location'],
-        user_id = form_data['user_id']
+        username = form_data['username'],
+        password = form_data['password']
         )
         db.session.add(new_user)
         db.session.commit()

@@ -12,8 +12,7 @@ def companies():
         form_data = request.get_json()
     try:
         new_company = Company(
-        location = form_data['location'],
-        company_id = form_data['company_id']
+        name = form_data['name']
         )
         db.session.add(new_company)
         db.session.commit()

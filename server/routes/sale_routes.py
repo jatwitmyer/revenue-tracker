@@ -18,8 +18,16 @@ def sales():
         form_data = request.get_json()
 
         try:
+            store_id = form_data.get(store_id)
+            price = InventoryItem.query.filter_by(store_id=store_id).first().price
+            product_id = form_data.get(product_id)
+            manufacturing_cost = Product.query.filter_by(id=product_id).first().manufacturing_cost
+            profit_margin = price - manufacturing_cost
             new_sale_obj = Sale(
-                price = form_data['price'],
+                confirmation_number = form_data['confirmation_number'],
+                price = price,
+                manufacturing_cost = manufacturing_cost,
+                profit_margin = profit_margin,
                 store_id = form_data['store_id'],
                 product_id = form_data['product_id'],
                 company_id = form_data['company_id']
