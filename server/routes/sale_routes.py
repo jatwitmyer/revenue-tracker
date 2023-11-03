@@ -16,13 +16,19 @@ def sales():
 
     elif request.method == 'POST':
         form_data = request.get_json()
+        price = form_data.get(price)
+        manufacturing_cost = form_data.get(manufacturing_cost)
 
-        try:
+        if form_data['price'] == '':
             store_id = form_data.get(store_id)
             price = InventoryItem.query.filter_by(store_id=store_id).first().price
+        if form_data['manufacturing_cost'] == '':
             product_id = form_data.get(product_id)
             manufacturing_cost = Product.query.filter_by(id=product_id).first().manufacturing_cost
-            profit_margin = price - manufacturing_cost
+
+        profit_margin = price - manufacturing_cost
+
+        try:
             new_sale_obj = Sale(
                 confirmation_number = form_data['confirmation_number'],
                 price = price,
