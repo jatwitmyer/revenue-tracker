@@ -33,7 +33,7 @@ def create_stores():
   stores = []
   for _ in range(6):
     st = Store(
-      location = fake.address(),
+      address = fake.address(),
       company_id = rc(companies).id
     )
     stores.append(st)
@@ -65,7 +65,6 @@ def create_inventory_items():
   inventory_items = []
   for _ in range(40):
     i = InventoryItem(
-      is_in_stock = fake.boolean(),
       product_id = rc(products).id,
       store_id = rc(stores).id
     )
