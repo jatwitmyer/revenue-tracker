@@ -10,9 +10,9 @@ db = SQLAlchemy(metadata=metadata)
 
 
 
-class User(db.Model, SerializerMixin):
-  __tablename__ = 'users'
-  serialize_rules= ('-company.users', '-stores.users', '-sales.users', '-products.users', '-inventory.users' )
+class Employee(db.Model, SerializerMixin):
+  __tablename__ = 'employees'
+  serialize_rules= ('-company.employees', '-stores.employees', '-sales.employees', '-products.employees', '-inventory.employees' )
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String, unique=True)
@@ -21,7 +21,7 @@ class User(db.Model, SerializerMixin):
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
 
   #relationships
-  company = db.relationship('Company', back_populates = 'users')
+  company = db.relationship('Company', back_populates = 'employees')
   stores = association_proxy('companies', 'stores')
   sales = association_proxy('companies', 'sales')
   products = association_proxy('companies', 'products')
@@ -32,40 +32,42 @@ class User(db.Model, SerializerMixin):
     if username:
       return username
     else:
-      raise ValueError('User must be given a unique username.')
+      raise ValueError('Employee must be given a unique username.')
     
   @validates('password')
   def validates_password(self, key, password):
     if password:
       return password
     else:
-      raise ValueError('User must be given a password.')
+      raise ValueError('Employee must be given a password.')
     
   @validates('company_id')
   def validates_company_id(self, key, company_id):
     if company_id:
       return company_id
     else:
-      raise ValueError('User must be assigned to a company.')
+      raise ValueError('Employee must be assigned to a company.')
 
   def __repr__(self):
-    return f'<User {self.id}: {self.username}. Password: {self.password}. Company ID: {self.company_id}.\n>'
+    return f'<Employee {self.id}: {self.username}. Password: {self.password}. Company ID: {self.company_id}.\n>'
 
 
 
 class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
-  serialize_rules = ('-users.company', '-sales.company', '-inventory.company', '-products.company', '-stores.company')
+  serialize_rules = ('-employees.company', '-stores.company', '-inventory.company', '-products.company', '-sales.company')
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, unique=True)
 
   #relationships
-  users = db.relationship('User', back_populates = 'company', cascade='all, delete-orphan')
-  sales = db.relationship('Sale', back_populates = 'company', cascade='all, delete-orphan')
-  inventory = db.relationship('InventoryItem', back_populates = 'company', cascade='all, delete-orphan')
-  products = db.relationship('Product', back_populates = 'company', cascade='all, delete-orphan')
+  employees = db.relationship('Employee', back_populates = 'company', cascade='all, delete-orphan')
   stores = db.relationship('Store', back_populates = 'company', cascade='all, delete-orphan')
+
+  # Association proxies
+  sales = association_proxy('stores', 'sales')
+  inventory = association_proxy('stores', 'inventory')
+  products = association_proxy('inventory', 'products')
 
   @validates('name')
   def validates_name(self, key, name):
@@ -81,7 +83,7 @@ class Company(db.Model, SerializerMixin):
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
-  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-products.store', '-users.stores')
+  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-products.store', '-employees.stores')
 
   id = db.Column(db.Integer, primary_key=True)
   address = db.Column(db.String)
@@ -93,7 +95,7 @@ class Store(db.Model, SerializerMixin):
   sales = db.relationship('Sale', back_populates = 'store', cascade='all, delete-orphan')
   inventory = db.relationship('InventoryItem', back_populates = 'store', cascade='all, delete-orphan')
   products = association_proxy('inventory', 'products')
-  users = association_proxy('companies', 'users')
+  employees = association_proxy('companies', 'employees')
 
   @validates('address')
   def validates_address(self, key, address):
@@ -116,21 +118,20 @@ class Store(db.Model, SerializerMixin):
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
-  serialize_rules = ('-company.products', '-sales.product', '-inventory.product', '-stores.products', '-users.products')
+  serialize_rules = ('-sales.product', '-inventory.product', '-stores.products', '-employees.products', '-company.products')
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
   serial_number = db.Column(db.Integer)
   manufacturing_cost = db.Column(db.Integer)
 
-  company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
-
   #relationships
-  company = db.relationship('Company', back_populates = 'products')
   sales = db.relationship('Sale', back_populates = 'product', cascade='all, delete-orphan')
   inventory = db.relationship('InventoryItem', back_populates = 'product', cascade='all, delete-orphan')
   stores = association_proxy('inventory', 'stores')
-  users = association_proxy('companies', 'users')
+  company = association_proxy('stores', 'companies')
+  employees = association_proxy('companies', 'employees')
+
 
   @validates('name')
   def validates_name(self, key, name):
@@ -152,22 +153,15 @@ class Product(db.Model, SerializerMixin):
       return manufacturing_cost
     else:
       raise ValueError('Product must be given a manufacturing cost.')
-    
-  @validates('company_id')
-  def validates_company_id(self, key, company_id):
-    if company_id:
-      return company_id
-    else:
-      raise ValueError('Product must be assigned to a company.')
 
   def __repr__(self):
-    return f'<Product {self.id}: {self.name}. Serial Number: {self.serial_number}. Manufacturing Cost: {self.manufacturing_cost}. Company ID: {self.company_id}\n>'
+    return f'<Product {self.id}: {self.name}. Serial Number: {self.serial_number}. Manufacturing Cost: {self.manufacturing_cost}.\n>'
 
 
 
 class Sale(db.Model, SerializerMixin):
   __tablename__ = 'sales'
-  serialize_rules = ('-company.sales', '-store.sales', '-product.sales', '-users.sales')
+  serialize_rules = ('-store.sales', '-product.sales', '-company.sales', '-employees.sales')
 
   id = db.Column(db.Integer, primary_key=True)
   #recieved from user
@@ -178,17 +172,15 @@ class Sale(db.Model, SerializerMixin):
   manufacturing_cost = db.Column(db.Integer) # at time of sale
   profit_margin = db.Column(db.Integer) # at time of sale
 
-  company_id = db.Column(db.Integer, db.ForeignKey('companies.id')) #ooooo this shouldn't be sent by user either. this should be assumed by their associated company (handled by front-end)
-
   #recieved from user
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationships
-  company = db.relationship('Company', back_populates = 'sales')
   store = db.relationship('Store', back_populates = 'sales')
   product = db.relationship('Product', back_populates = 'sales')
-  users = association_proxy('companies', 'users')
+  employees = association_proxy('companies', 'employees')
+  company = association_proxy('stores', 'companies')
   
   @validates('confirmation_number')
   def validates_confirmation_number(self, key, confirmation_number):
@@ -196,13 +188,6 @@ class Sale(db.Model, SerializerMixin):
       return confirmation_number
     else:
       raise ValueError('Sale must be given a confirmation number.')
-
-  @validates('company_id')
-  def validates_company_id(self, key, company_id):
-    if company_id:
-      return company_id
-    else:
-      raise ValueError('Sale must be assigned to a company.')
     
   @validates('product_id')
   def validates_product_id(self, key, product_id):
@@ -225,20 +210,19 @@ class Sale(db.Model, SerializerMixin):
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
-  serialize_rules = ('-company.inventory', '-store.inventory', '-product.inventory', '-users.inventory')
+  serialize_rules = ('-store.inventory', '-product.inventory', '-company.inventory', '-employees.inventory')
 
   id = db.Column(db.Integer, primary_key=True)
   price = db.Column(db.Integer)
 
-  company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationships
-  company = db.relationship('Company', back_populates = 'inventory')
   store = db.relationship('Store', back_populates = 'inventory')
   product = db.relationship('Product', back_populates = 'inventory')
-  users = association_proxy('companies', 'users')
+  employees = association_proxy('companies', 'employees')
+  company = association_proxy('stores', 'companies')
 
   @validates('price')
   def validates_price(self, key, price):
@@ -246,13 +230,6 @@ class InventoryItem(db.Model, SerializerMixin):
       return price
     else:
       raise ValueError('Inventory item must be given a price.')
-    
-  @validates('company_id')
-  def validates_company_id(self, key, company_id):
-    if company_id:
-      return company_id
-    else:
-      raise ValueError('Inventory item must be assigned to a company.')
     
   @validates('product_id')
   def validates_product_id(self, key, product_id):

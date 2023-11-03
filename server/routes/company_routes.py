@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
 @app.route('/companies', methods=['GET','POST'])

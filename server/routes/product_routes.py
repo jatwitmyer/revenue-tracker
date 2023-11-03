@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
 @app.route('/products', methods = ['GET', 'POST'])
@@ -21,8 +21,7 @@ def products():
             new_product_obj = Product(
                 name = form_data['name'],
                 manufacturing_cost = form_data['manufacturing_cost'],
-                serial_number = form_data['serial_number'],
-                company_id = form_data['company_id']
+                serial_number = form_data['serial_number']
             )
 
             db.session.add(new_product_obj)

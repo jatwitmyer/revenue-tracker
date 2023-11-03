@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
 @app.route('/inventory', methods = ['GET', 'POST'])
@@ -21,8 +21,7 @@ def inventory():
             new_inventory_obj = InventoryItem(
                 price = form_data['price'],
                 store_id = form_data['store_id'],
-                product_id = form_data['product_id'],
-                company_id = form_data['company_id']
+                product_id = form_data['product_id']
             )
 
             db.session.add(new_inventory_obj)

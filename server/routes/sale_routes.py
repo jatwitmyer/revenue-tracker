@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
 @app.route('/sales', methods = ['GET', 'POST'])
@@ -36,8 +36,7 @@ def sales():
                 manufacturing_cost = manufacturing_cost,
                 profit_margin = profit_margin,
                 store_id = form_data['store_id'],
-                product_id = form_data['product_id'],
-                company_id = form_data['company_id']
+                product_id = form_data['product_id']
             )
 
             db.session.add(new_sale_obj)
