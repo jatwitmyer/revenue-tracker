@@ -1,8 +1,8 @@
-"""first migration
+"""refactors sales, inventory
 
-Revision ID: 38b69f15795b
+Revision ID: 87fa173d4714
 Revises: 
-Create Date: 2023-11-01 14:38:34.977785
+Create Date: 2023-11-03 13:33:48.103373
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '38b69f15795b'
+revision = '87fa173d4714'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -35,7 +35,7 @@ def upgrade():
     )
     op.create_table('stores',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('location', sa.String(), nullable=True),
+    sa.Column('address', sa.String(), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['company_id'], ['companies.id'], name=op.f('fk_stores_company_id_companies')),
     sa.PrimaryKeyConstraint('id')
@@ -51,18 +51,21 @@ def upgrade():
     )
     op.create_table('inventory',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('is_in_stock', sa.Boolean(), nullable=True),
+    sa.Column('price', sa.Integer(), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
     sa.Column('store_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['company_id'], ['inventory.id'], name=op.f('fk_inventory_company_id_inventory')),
+    sa.ForeignKeyConstraint(['company_id'], ['companies.id'], name=op.f('fk_inventory_company_id_companies')),
     sa.ForeignKeyConstraint(['product_id'], ['products.id'], name=op.f('fk_inventory_product_id_products')),
     sa.ForeignKeyConstraint(['store_id'], ['stores.id'], name=op.f('fk_inventory_store_id_stores')),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('sales',
     sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('confirmation_number', sa.Integer(), nullable=True),
     sa.Column('price', sa.Integer(), nullable=True),
+    sa.Column('manufacturing_cost', sa.Integer(), nullable=True),
+    sa.Column('profit_margin', sa.Integer(), nullable=True),
     sa.Column('company_id', sa.Integer(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
     sa.Column('store_id', sa.Integer(), nullable=True),
