@@ -4,7 +4,7 @@ from faker import Faker
 import faker_commerce
 
 from app import app
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 
 fake = Faker()
 fake.add_provider(faker_commerce.Provider)
@@ -18,16 +18,16 @@ def create_companies():
     companies.append(c)
   return companies
 
-def create_users():
-  users = []
+def create_employees():
+  employees = []
   for _ in range(20):
-    u = User(
+    e = Employee(
       username = fake.bothify(text='user#####'),
       password = fake.bothify(text='password#####'),
       company_id = rc(companies).id
     )
-    users.append(u)
-  return users
+    employees.append(e)
+  return employees
 
 def create_stores():
   stores = []
@@ -45,8 +45,7 @@ def create_products():
     p = Product(
       name = fake.ecommerce_name(),
       serial_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
-      manufacturing_cost = fake.ecommerce_price(), #"need" to make this smaller than sale price
-      company_id = rc(companies).id
+      manufacturing_cost = fake.ecommerce_price() #"need" to make this smaller than sale price
     )
     products.append(p)
   return products
@@ -56,9 +55,8 @@ def create_sales():
   for _ in range(40):
     sa = Sale(
       price = fake.ecommerce_price(),
-      company_id = rc(companies).id,
       product_id = rc(products).id,
-      store_id = rc(stores).id,
+      store_id = rc(stores).id
     )
     sales.append(sa)
   return sales
@@ -68,9 +66,8 @@ def create_inventory_items():
   for _ in range(40):
     i = InventoryItem(
       is_in_stock = fake.boolean(),
-      company_id = rc(companies).id,
       product_id = rc(products).id,
-      store_id = rc(stores).id,
+      store_id = rc(stores).id
     )
     inventory_items.append(i)
   return inventory_items
@@ -82,7 +79,7 @@ if __name__ == '__main__':
   with app.app_context():
     print("Clearing db...")
     Company.query.delete() #stuck here bc it can't find foreign keys connecting companies and inventory
-    User.query.delete()
+    Employee.query.delete()
     Store.query.delete()
     Product.query.delete()
     Sale.query.delete()
@@ -94,8 +91,8 @@ if __name__ == '__main__':
     db.session.commit()
 
     print("Seeding users...")
-    users = create_users()
-    db.session.add_all(users)
+    employees = create_employees()
+    db.session.add_all(employees)
     db.session.commit()
 
     print("Seeding stores...")
