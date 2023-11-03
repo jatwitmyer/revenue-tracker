@@ -53,8 +53,13 @@ def create_products():
 def create_sales():
   sales = []
   for _ in range(40):
+    price = fake.ecommerce_price(),
+    manufacturing_cost = fake.ecommerce_price(),
     sa = Sale(
-      price = fake.ecommerce_price(),
+      confirmation_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+      price = price,
+      manufacturing_cost = manufacturing_cost,
+      profit_margin = price - manufacturing_cost,
       product_id = rc(products).id,
       store_id = rc(stores).id
     )
@@ -65,6 +70,7 @@ def create_inventory_items():
   inventory_items = []
   for _ in range(40):
     i = InventoryItem(
+      price = fake.ecommerce_price(),
       product_id = rc(products).id,
       store_id = rc(stores).id
     )
@@ -89,7 +95,7 @@ if __name__ == '__main__':
     db.session.add_all(companies)
     db.session.commit()
 
-    print("Seeding users...")
+    print("Seeding employees...")
     employees = create_employees()
     db.session.add_all(employees)
     db.session.commit()
