@@ -27,6 +27,20 @@ class User(db.Model, SerializerMixin):
   products = association_proxy('companies', 'products')
   inventory = association_proxy('companies', 'inventory')
 
+  @validates('username')
+  def validates_username(self, key, username):
+    if username:
+      return username
+    else:
+      raise ValueError('User must be given a unique username.')
+    
+  @validates('password')
+  def validates_password(self, key, password):
+    if password:
+      return password
+    else:
+      raise ValueError('User must be given a password.')
+    
   @validates('company_id')
   def validates_company_id(self, key, company_id):
     if company_id:
@@ -35,7 +49,7 @@ class User(db.Model, SerializerMixin):
       raise ValueError('User must be assigned to a company.')
 
   def __repr__(self):
-    return f'\n\n<User {self.id}:\nUsername: {self.username}\nPassword: {self.password}\nCompany ID: {self.company_id}>'
+    return f'<User {self.id}: {self.username}. Password: {self.password}. Company ID: {self.company_id}.\n>'
 
 
 
@@ -61,7 +75,7 @@ class Company(db.Model, SerializerMixin):
       raise ValueError('Company must be given a name.')
 
   def __repr__(self):
-    return f'\n\n<Company {self.id}: {self.name}>'
+    return f'<Company {self.id}: {self.name}\n>'
 
 
 
@@ -96,7 +110,7 @@ class Store(db.Model, SerializerMixin):
       raise ValueError('Store must be assigned to a company.')
 
   def __repr__(self):
-    return f'\n\n<Store {self.id}:\naddress: {self.address}>'
+    return f'<Store {self.id} Address: {self.address}.\n>'
 
 
 
@@ -147,7 +161,7 @@ class Product(db.Model, SerializerMixin):
       raise ValueError('Product must be assigned to a company.')
 
   def __repr__(self):
-    return f'\n\n<>'
+    return f'<Product {self.id}: {self.name}. Serial Number: {self.serial_number}. Manufacturing Cost: {self.manufacturing_cost}. Company ID: {self.company_id}\n>'
 
 
 
@@ -157,7 +171,7 @@ class Sale(db.Model, SerializerMixin):
 
   id = db.Column(db.Integer, primary_key=True)
   #recieved from user
-  confirmation_number = db.Column(db.Integer)
+  confirmation_number = db.Column(db.String)
 
   #handled full by back-end. not directly recieved from the user
   price = db.Column(db.Integer) #at time of sale
@@ -205,7 +219,7 @@ class Sale(db.Model, SerializerMixin):
       raise ValueError('Sale must be assigned to a store.')
   
   def __repr__(self):
-    return f'\n\n<>'
+    return f'<Sale {self.id} Confirmation Number: {self.confirmation_number}. >'
 
 
 

@@ -21,7 +21,8 @@ def sales():
 
         if form_data['price'] == '':
             store_id = form_data.get(store_id)
-            price = InventoryItem.query.filter_by(store_id=store_id).first().price
+            product_id = form_data.get(product_id)
+            price = InventoryItem.query.filter(InventoryItem.store_id == store_id and InventoryItem.product_id == product_id).first().price
         if form_data['manufacturing_cost'] == '':
             product_id = form_data.get(product_id)
             manufacturing_cost = Product.query.filter_by(id=product_id).first().manufacturing_cost
