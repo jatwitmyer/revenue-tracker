@@ -86,6 +86,7 @@ class Store(db.Model, SerializerMixin):
   serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-products.store', '-employees.stores')
 
   id = db.Column(db.Integer, primary_key=True)
+  name = db.Column(db.String)
   address = db.Column(db.String)
 
   company_id = db.Column(db.Integer, db.ForeignKey('companies.id'))
@@ -166,6 +167,7 @@ class Sale(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   #recieved from user
   confirmation_number = db.Column(db.String)
+  date_time = db.Column(db.String)
 
   #handled full by back-end. not directly recieved from the user
   price = db.Column(db.Integer) #at time of sale
