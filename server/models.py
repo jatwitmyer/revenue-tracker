@@ -83,7 +83,7 @@ class Company(db.Model, SerializerMixin):
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
-  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-products.store', '-employees.stores')
+  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-inventory.product', '-products.stores', '-employees.stores', '-company.employees')
 
   id = db.Column(db.Integer, primary_key=True)
   address = db.Column(db.String)
@@ -118,7 +118,8 @@ class Store(db.Model, SerializerMixin):
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
-  serialize_rules = ('-sales.product', '-inventory.product', '-stores.products', '-employees.products', '-company.products')
+  serialize_rules = ('-sales.product', '-inventory.product', '-company.employees', '-inventory.store')
+  # '-employees.products', '-company.products' 
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String)
@@ -128,10 +129,11 @@ class Product(db.Model, SerializerMixin):
   #relationships
   sales = db.relationship('Sale', back_populates = 'product', cascade='all, delete-orphan')
   inventory = db.relationship('InventoryItem', back_populates = 'product', cascade='all, delete-orphan')
-  stores = association_proxy('inventory', 'stores')
-  company = association_proxy('stores', 'companies')
-  employees = association_proxy('companies', 'employees')
 
+
+  # stores = association_proxy('inventory', 'store')
+  # company = association_proxy('stores', 'companies')
+  # employees = association_proxy('companies', 'employees')
 
   @validates('name')
   def validates_name(self, key, name):
@@ -166,12 +168,10 @@ class Sale(db.Model, SerializerMixin):
   id = db.Column(db.Integer, primary_key=True)
   #recieved from user
   confirmation_number = db.Column(db.String)
-
   #handled full by back-end. not directly recieved from the user
   price = db.Column(db.Integer) #at time of sale
   manufacturing_cost = db.Column(db.Integer) # at time of sale
   profit_margin = db.Column(db.Integer) # at time of sale
-
   #recieved from user
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
@@ -179,8 +179,8 @@ class Sale(db.Model, SerializerMixin):
   #relationships
   store = db.relationship('Store', back_populates = 'sales')
   product = db.relationship('Product', back_populates = 'sales')
-  employees = association_proxy('companies', 'employees')
-  company = association_proxy('stores', 'companies')
+  # employees = association_proxy('companies', 'employees')
+  # company = association_proxy('stores', 'companies')
   
   @validates('confirmation_number')
   def validates_confirmation_number(self, key, confirmation_number):
@@ -210,19 +210,20 @@ class Sale(db.Model, SerializerMixin):
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
-  serialize_rules = ('-store.inventory', '-product.inventory', '-company.inventory', '-employees.inventory')
+  serialize_rules = ('-store.inventory', '-product.inventory')
+  # '-company.inventory', '-employees.inventory'
 
   id = db.Column(db.Integer, primary_key=True)
   price = db.Column(db.Integer)
-
   product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationships
   store = db.relationship('Store', back_populates = 'inventory')
-  product = db.relationship('Product', back_populates = 'inventory')
-  employees = association_proxy('companies', 'employees')
-  company = association_proxy('stores', 'companies')
+  product = db.relationship('Product', back_populates = 'inventory') 
+
+  # employees = association_proxy('companies', 'employees')
+  # company = association_proxy('stores', 'companies')
 
   @validates('price')
   def validates_price(self, key, price):

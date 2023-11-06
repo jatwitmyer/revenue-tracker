@@ -7,8 +7,8 @@ def inventory():
     
     if request.method == 'GET':
         inventory_items = InventoryItem.query.all()
-        inventory_dict = [inventory.to_dict(rules = ('-product', '-store', '-company')) for inventory in inventory_items]
-
+        inventory_dict = [inventory.to_dict() for inventory in inventory_items]
+        #rules = ('-product', '-store', '-company')
         response = make_response(
             inventory_dict,
             200

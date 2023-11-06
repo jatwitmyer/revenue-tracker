@@ -6,20 +6,20 @@ from config import app
 def companies():
     if request.method == 'GET':
         companies = Company.query.all()
-        response = companies.to_dict(rules = ('', ))
+        response = [company.to_dict() for company in companies]#rules = ('', )
         return make_response(response, 200)
     elif request.method == 'POST':
         form_data = request.get_json()
-    try:
-        new_company = Company(
-        name = form_data['name']
-        )
-        db.session.add(new_company)
-        db.session.commit()
-        return make_response(new_company.to_dict(rules = ('', )), 201)
-    except ValueError:
-        response = {"errors": ["validation errors"]}
-        return make_response(response, 403)
+        try:
+            new_company = Company(
+            name = form_data['name']
+            )
+            db.session.add(new_company)
+            db.session.commit()
+            return make_response(new_company.to_dict(rules = ('', )), 201)
+        except ValueError:
+            response = {"errors": ["validation errors"]}
+            return make_response(response, 403)
     
 @app.route('/companies/<int:id>', methods=['GET', 'PATCH', 'DELETE'])
 def company_by_id(id):
