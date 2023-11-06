@@ -7,7 +7,7 @@ def products():
     
     if request.method == 'GET':
         products = Product.query.all()
-        product_dict = [product.to_dict(rules = ('-sale', '-inventory_item')) for product in products]
+        product_dict = [product.to_dict() for product in products]
 
         response = make_response(
             product_dict,
@@ -62,7 +62,7 @@ def products_by_id(id):
                 db.session.commit()
 
                 response = make_response(
-                    product.to_dict(rules = ('-sale', '-inventory_item')),
+                    product.to_dict(),
                     202
                 )
 

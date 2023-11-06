@@ -6,7 +6,7 @@ from config import app
 def companies():
     if request.method == 'GET':
         companies = Company.query.all()
-        response = companies.to_dict(rules = ('', ))
+        response = [company.to_dict() for company in companies]
         return make_response(response, 200)
     elif request.method == 'POST':
         form_data = request.get_json()
@@ -16,7 +16,7 @@ def companies():
         )
         db.session.add(new_company)
         db.session.commit()
-        return make_response(new_company.to_dict(rules = ('', )), 201)
+        return make_response(new_company.to_dict(), 201)
     except ValueError:
         response = {"errors": ["validation errors"]}
         return make_response(response, 403)
@@ -28,7 +28,7 @@ def company_by_id(id):
         response = {"error": "Company not found"}
         return make_response(response, 404)
     elif request.method == 'GET':
-        response = company.to_dict(rules = ('', ))
+        response = company.to_dict()
         return make_response(response, 200)
     elif request.method == 'PATCH':
         form_data = request.get_json()
@@ -36,7 +36,7 @@ def company_by_id(id):
             for attr in form_data:
                 setattr(company, attr, form_data.get(attr))
             db.session.commit()
-            response = company.to_dict(rules = ('', ))
+            response = company.to_dict()
             return make_response(response, 200)
         except ValueError:
             response = {"errors": ["validation errors"]}

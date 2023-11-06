@@ -219,7 +219,7 @@ class InventoryItem(db.Model, SerializerMixin):
   store_id = db.Column(db.Integer, db.ForeignKey('stores.id'))
 
   #relationships
-  store = db.relationship('Store', back_populates = 'inventory')
+  stores = db.relationship('Store', back_populates = 'inventory')
   product = db.relationship('Product', back_populates = 'inventory')
   employees = association_proxy('companies', 'employees')
   company = association_proxy('stores', 'companies')
