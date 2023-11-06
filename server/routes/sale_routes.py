@@ -32,6 +32,7 @@ def sales():
         try:
             new_sale_obj = Sale(
                 confirmation_number = form_data['confirmation_number'],
+                date_time = form_data['date_time'],
                 price = price,
                 manufacturing_cost = manufacturing_cost,
                 profit_margin = profit_margin,
