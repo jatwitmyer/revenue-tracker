@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
 @app.route('/sales', methods = ['GET', 'POST'])
@@ -16,13 +16,27 @@ def sales():
 
     elif request.method == 'POST':
         form_data = request.get_json()
+        price = form_data.get(price)
+        manufacturing_cost = form_data.get(manufacturing_cost)
+
+        if form_data['price'] == '':
+            store_id = form_data.get(store_id)
+            product_id = form_data.get(product_id)
+            price = InventoryItem.query.filter(InventoryItem.store_id == store_id and InventoryItem.product_id == product_id).first().price
+        if form_data['manufacturing_cost'] == '':
+            product_id = form_data.get(product_id)
+            manufacturing_cost = Product.query.filter_by(id=product_id).first().manufacturing_cost
+
+        profit_margin = price - manufacturing_cost
 
         try:
             new_sale_obj = Sale(
-                price = form_data['price'],
+                confirmation_number = form_data['confirmation_number'],
+                price = price,
+                manufacturing_cost = manufacturing_cost,
+                profit_margin = profit_margin,
                 store_id = form_data['store_id'],
-                product_id = form_data['product_id'],
-                company_id = form_data['company_id']
+                product_id = form_data['product_id']
             )
 
             db.session.add(new_sale_obj)

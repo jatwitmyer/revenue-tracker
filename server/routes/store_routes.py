@@ -1,5 +1,5 @@
 from flask import Flask, make_response, request
-from models import db, User, Company, Store, Product, Sale, InventoryItem
+from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
 @app.route('/stores', methods=['GET','POST'])
@@ -12,7 +12,7 @@ def stores():
         form_data = request.get_json()
     try:
         new_store = Store(
-        location = form_data['location'],
+        address = form_data['address'],
         company_id = form_data['company_id']
         )
         db.session.add(new_store)
