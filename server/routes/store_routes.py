@@ -6,7 +6,7 @@ from config import app
 def stores():
     if request.method == 'GET':
         stores = Store.query.all()
-        response = stores.to_dict()
+        response = [store.to_dict() for store in stores]
         return make_response(response, 200)
     elif request.method == 'POST':
         form_data = request.get_json()
