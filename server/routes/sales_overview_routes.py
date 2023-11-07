@@ -2,6 +2,7 @@ from flask import Flask, make_response, request
 from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
+
 #sales overview page
 @app.route('/<int:company_id>/sales_overview/stores', methods=['GET'])
 def all_stores_by_company(company_id):
@@ -37,8 +38,6 @@ def revenue(company_id):
     # for store in stores:
     response = make_response({"greeting": "hi, jessica"}, 200)
   return response
-
-
 
 
 #stores page
