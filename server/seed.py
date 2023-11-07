@@ -97,6 +97,7 @@ def create_sales():
   for _ in range(30):
     product_id = rc(products[0]).id
     store_id = rc(stores[0]).id
+    price = 0
     manufacturing_cost = 0
     #find the product grab the manufacturing cost
     for product in products[0]:
@@ -125,6 +126,7 @@ def create_sales():
   for _ in range(30):
     product_id = rc(products[1]).id
     store_id = rc(stores[1]).id
+    price = 0
     manufacturing_cost = 0
     #find the product grab the manufacturing cost
     for product in products[1]:
