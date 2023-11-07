@@ -12,7 +12,7 @@ db = SQLAlchemy(metadata=metadata)
 
 class Employee(db.Model, SerializerMixin):
   __tablename__ = 'employees'
-  serialize_rules= ('-company.employees', '-stores.employees', '-sales.employees', '-products.employees', '-inventory.employees' )
+  serialize_rules= ('-company.employees', '-company.stores', '-stores.employees', '-sales.employees', '-products.employees', '-inventory.employees', '-company_id')
 
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String, unique=True)
@@ -55,7 +55,7 @@ class Employee(db.Model, SerializerMixin):
 
 class Company(db.Model, SerializerMixin):
   __tablename__ = 'companies'
-  serialize_rules = ('-employees.company', '-stores.company', '-inventory.company', '-products.company', '-sales.company')
+  serialize_rules = ('-employees.company', '-stores.company', '-inventory.company', '-products.company', '-sales.company', '-employees.company_id', '-employees.password')
 
   id = db.Column(db.Integer, primary_key=True)
   name = db.Column(db.String, unique=True)
@@ -67,7 +67,7 @@ class Company(db.Model, SerializerMixin):
   # Association proxies
   sales = association_proxy('stores', 'sales')
   inventory = association_proxy('stores', 'inventory')
-  products = association_proxy('inventory', 'products')
+  products = association_proxy('stores', 'products')
 
   @validates('name')
   def validates_name(self, key, name):
@@ -119,7 +119,7 @@ class Store(db.Model, SerializerMixin):
 
 class Product(db.Model, SerializerMixin):
   __tablename__ = 'products'
-  serialize_rules = ('-sales.product', '-inventory.product', '-company.employees', '-inventory.store')
+  serialize_rules = ('-sales.product', '-inventory.product', '-company.employees', '-inventory.store.company', '-inventory.store.sales', '-inventory.product_id', '-inventory.store_id')
   # '-employees.products', '-company.products' 
 
   id = db.Column(db.Integer, primary_key=True)
@@ -164,7 +164,7 @@ class Product(db.Model, SerializerMixin):
 
 class Sale(db.Model, SerializerMixin):
   __tablename__ = 'sales'
-  serialize_rules = ('-store.sales', '-product.sales', '-company.sales', '-employees.sales')
+  serialize_rules = ('-product.sales', '-company.sales', '-employees.sales', '-product.inventory', '-product.manufacturing_cost', '-store.sales', '-store.inventory', '-store.company', '-store_id', '-product_id')
 
   id = db.Column(db.Integer, primary_key=True)
   #recieved from user
@@ -213,7 +213,7 @@ class Sale(db.Model, SerializerMixin):
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
-  serialize_rules = ('-store.inventory', '-product.inventory')
+  serialize_rules = ('-store.inventory', '-product.inventory', '-product_id', '-product.sales', '-store_id', '-store.company', '-store.sales.product')
   # '-company.inventory', '-employees.inventory'
 
   id = db.Column(db.Integer, primary_key=True)
