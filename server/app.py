@@ -5,6 +5,7 @@ from routes.inventory_routes import inventory, inventory_by_id
 from routes.sale_routes import sales, sales_by_id
 from routes.company_routes import companies, company_by_id
 from routes.employee_routes import employees, employees_by_id
+from routes.sales_overview_routes import revenue, all_stores_by_company, all_products_by_company, all_inventory_by_store
 
 @app.route('/')
 def index():

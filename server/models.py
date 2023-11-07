@@ -213,7 +213,7 @@ class Sale(db.Model, SerializerMixin):
 
 class InventoryItem(db.Model, SerializerMixin):
   __tablename__ = 'inventory'
-  serialize_rules = ('-store.inventory', '-product.inventory', '-product_id', '-product.sales', '-store_id', '-store.company', '-store.sales.product')
+  serialize_rules = ('-store.inventory', '-product.inventory', '-product.sales', '-store.company', '-store.sales.product')
   # '-company.inventory', '-employees.inventory'
 
   id = db.Column(db.Integer, primary_key=True)
@@ -250,4 +250,4 @@ class InventoryItem(db.Model, SerializerMixin):
       raise ValueError('Inventory item must be assigned to a store.')
 
   def __repr__(self):
-    return f'\n\n<>'
+    return f'\n\n<Inventory Item {self.id}>'

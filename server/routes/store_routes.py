@@ -2,6 +2,16 @@ from flask import Flask, make_response, request
 from models import db, Employee, Company, Store, Product, Sale, InventoryItem
 from config import app
 
+@app.route('/<int:company_id>/stores/<int:store_id>', methods=['GET'])
+def all_inventory_by_store(company_id, store_id):
+    if request.method == 'GET':
+        inventory_items = InventoryItem.query.filter(InventoryItem.store_id == store_id).all()
+        print("\n inventory \n")
+        print(inventory_items)
+        print("\n")
+        response = make_response([inventory_item.to_dict(rules = ('-product_id', '-store_id', '-store')) for inventory_item in inventory_items], 200)
+    return response
+
 @app.route('/stores', methods=['GET','POST'])
 def stores():
     if request.method == 'GET':
