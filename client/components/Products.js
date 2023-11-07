@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function Products() {
+function Products({productsArray}) {
     return (
         <></>
     )

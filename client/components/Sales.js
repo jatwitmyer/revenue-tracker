@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 
-function Stores({storesArray}) {
+function Sales({salesArray}) {
     return (
         <></>
     )
 }
 
-export default Stores 
+export default Sales 
