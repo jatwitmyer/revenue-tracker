@@ -37,13 +37,13 @@ function App() {
             <NavBar />
             <Switch>
                 <Route exact path="/sales">
-                    <Sales salesArray={salesArray} />
+                    <Sales salesArray={salesArray} setSalesArray={setSalesArray} />
                 </Route>
                 <Route exact path="/stores">
-                    <Stores storesArray={storesArray} />
+                    <Stores storesArray={storesArray} setStoresArray={setStoresArray} />
                 </Route>
                 <Route exact path="/products">
-                    <Products productsArray={productsArray} />
+                    <Products productsArray={productsArray} setProductsArray={setProductsArray} />
                 </Route>
             </Switch>
         </div>
