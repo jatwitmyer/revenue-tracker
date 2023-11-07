@@ -83,7 +83,7 @@ class Company(db.Model, SerializerMixin):
 
 class Store(db.Model, SerializerMixin):
   __tablename__ = 'stores'
-  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-inventory.product', '-products.stores', '-employees.stores', '-company.employees')
+  serialize_rules = ('-company.stores', '-sales.store', '-inventory.store', '-inventory.product', '-products.stores', '-employees.stores', '-company.employees', '-company_id', '-sales.product.inventory')
 
   id = db.Column(db.Integer, primary_key=True)
   address = db.Column(db.String)
