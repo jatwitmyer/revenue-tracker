@@ -6,7 +6,7 @@ from config import app
 def employees():
     if request.method == 'GET':
         employees = Employee.query.all()
-        response = employees.to_dict(rules = ('', ))
+        response = employees.to_dict()
         return make_response(response, 200)
     elif request.method == 'POST':
         form_data = request.get_json()
@@ -17,7 +17,7 @@ def employees():
         )
         db.session.add(new_employee)
         db.session.commit()
-        return make_response(new_employee.to_dict(rules = ('', )), 201)
+        return make_response(new_employee.to_dict(), 201)
     except ValueError:
         response = {"errors": ["validation errors"]}
         return make_response(response, 403)
@@ -29,7 +29,7 @@ def employees_by_id(id):
         response = {"error": "Employee not found"}
         return make_response(response, 404)
     elif request.method == 'GET':
-        response = employee.to_dict(rules = ('', ))
+        response = employee.to_dict()
         return make_response(response, 200)
     elif request.method == 'PATCH':
         form_data = request.get_json()
@@ -37,7 +37,7 @@ def employees_by_id(id):
             for attr in form_data:
                 setattr(employee, attr, form_data.get(attr))
             db.session.commit()
-            response = employee.to_dict(rules = ('', ))
+            response = employee.to_dict()
             return make_response(response, 200)
         except ValueError:
             response = {"errors": ["validation errors"]}

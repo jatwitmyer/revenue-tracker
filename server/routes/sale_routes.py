@@ -7,7 +7,7 @@ def sales():
     
     if request.method == 'GET':
         sales = Sale.query.all()
-        sales_dict = [sale.to_dict(rules = ('-product', '-store', '-company')) for sale in sales]
+        sales_dict = [sale.to_dict() for sale in sales]
 
         response = make_response(
             sales_dict,
@@ -78,7 +78,7 @@ def sales_by_id(id):
                 db.session.commit()
 
                 response = make_response(
-                    sale.to_dict(rules = ('-product', '-store', '-company')),
+                    sale.to_dict(),
                     202
                 )
 

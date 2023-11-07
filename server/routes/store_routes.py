@@ -18,7 +18,7 @@ def stores():
         )
         db.session.add(new_store)
         db.session.commit()
-        return make_response(new_store.to_dict(rules = ('', )), 201)
+        return make_response(new_store.to_dict(), 201)
     except ValueError:
         response = {"errors": ["validation errors"]}
         return make_response(response, 403)
@@ -38,7 +38,7 @@ def store_by_id(id):
             for attr in form_data:
                 setattr(store, attr, form_data.get(attr))
             db.session.commit()
-            response = store.to_dict(rules = ('', ))
+            response = store.to_dict()
             return make_response(response, 200)
         except ValueError:
             response = {"errors": ["validation errors"]}

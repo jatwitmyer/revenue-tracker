@@ -7,7 +7,7 @@ def inventory():
     
     if request.method == 'GET':
         inventory_items = InventoryItem.query.all()
-        inventory_dict = [inventory.to_dict(rules = ('-product', '-store', '-company')) for inventory in inventory_items]
+        inventory_dict = [inventory.to_dict() for inventory in inventory_items]
 
         response = make_response(
             inventory_dict,
@@ -62,7 +62,7 @@ def inventory_by_id(id):
                 db.session.commit()
 
                 response = make_response(
-                    inventory.to_dict(rules = ('-product', '-store', '-company')),
+                    inventory.to_dict(),
                     202
                 )
 
