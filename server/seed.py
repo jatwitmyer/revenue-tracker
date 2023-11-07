@@ -95,18 +95,12 @@ def create_sales():
   sales_c2 = []
   #create sales for company one
   for _ in range(30):
-    product_id = rc(products[0]).id
-    store_id = rc(stores[0]).id
-    price = 0
+    inventory_item = rc(inventory_items[0])
     manufacturing_cost = 0
     #find the product grab the manufacturing cost
     for product in products[0]:
-      if product.id == product_id:
+      if product.id == inventory_item.product_id:
         manufacturing_cost = product.manufacturing_cost
-    #find the inventory instance and grab the price
-    for inventory_item in inventory_items[0]:
-      if (inventory_item.store_id == store_id) and (inventory_item.product_id == product_id):
-        price = inventory_item.price
     #create a new sales item which has this information
     sa = Sale(
       confirmation_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
@@ -115,27 +109,21 @@ def create_sales():
         datetime_end=datetime.date(2023, 11, 9),
         tzinfo=None,
         ),
-      product_id = product_id,
-      store_id = store_id,
-      price = price,
+      product_id = inventory_item.product_id,
+      store_id = inventory_item.store_id,
+      price = inventory_item.price,
       manufacturing_cost = manufacturing_cost,
-      profit_margin = round((price - manufacturing_cost), 2)
+      profit_margin = round((inventory_item.price - manufacturing_cost), 2)
     )
     sales_c1.append(sa)
   #create sales for company two
   for _ in range(30):
-    product_id = rc(products[1]).id
-    store_id = rc(stores[1]).id
-    price = 0
+    inventory_item = rc(inventory_items[1])
     manufacturing_cost = 0
     #find the product grab the manufacturing cost
     for product in products[1]:
-      if product.id == product_id:
+      if product.id == inventory_item.product_id:
         manufacturing_cost = product.manufacturing_cost
-    #find the inventory instance and grab the price
-    for inventory_item in inventory_items[1]:
-      if (inventory_item.store_id == store_id) and (inventory_item.product_id == product_id):
-        price = inventory_item.price
     #create a new sales item which has this information
     sa = Sale(
       confirmation_number = fake.bothify(text='????########', letters='ABCDEFGHIJKLMNOPQRSTUVWXYZ'),
@@ -144,13 +132,14 @@ def create_sales():
         datetime_end=datetime.date(2023, 11, 9),
         tzinfo=None,
         ),
-      product_id = product_id,
-      store_id = store_id,
-      price = price,
+      product_id = inventory_item.product_id,
+      store_id = inventory_item.store_id,
+      price = inventory_item.price,
       manufacturing_cost = manufacturing_cost,
-      profit_margin = round((price - manufacturing_cost), 2)
+      profit_margin = round((inventory_item.price - manufacturing_cost), 2)
     )
     sales_c2.append(sa)
+
   sales = [sales_c1, sales_c2]
   return sales
 
