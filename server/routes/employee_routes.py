@@ -6,7 +6,7 @@ from config import app
 def employees():
     if request.method == 'GET':
         employees = Employee.query.all()
-        response = employees.to_dict()
+        response = [employee.to_dict() for employee in employees]
         return make_response(response, 200)
     elif request.method == 'POST':
         form_data = request.get_json()
