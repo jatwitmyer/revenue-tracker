@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-function Products({productsArray}) {
+function Products({productsArray, setProductsArray}) {
     return (
         <></>
     )

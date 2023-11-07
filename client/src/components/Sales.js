@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-function Sales({salesArray}) {
+function Sales({salesArray, setSalesArray}) {
     return (
         <></>
     )
