@@ -5,8 +5,13 @@ function NavBar() {
 
     return (
         <>
+            <ul>
+                <li><NavLink to="/sales">Sales</NavLink></li>
+                <li><NavLink to="/stores">Stores</NavLink></li>
+                <li><NavLink to="/products">Products</NavLink></li>
+            </ul>
         </>
-    );
+    )
 }
 
 export default NavBar
