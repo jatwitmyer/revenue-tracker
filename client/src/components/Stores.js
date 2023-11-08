@@ -5,6 +5,7 @@ function Stores() {
     const [storesArray, setStoresArray] = useState([])
     const [inventoryByStore, setInventoryByStore] = useState({})
     const [featuredStore, setFeaturedStore] = useState({})
+    const [showForm, setShowForm] = useState(false)
 
     console.log(featuredStore.sales)
     // console.log(storesArray)
@@ -50,7 +51,7 @@ function Stores() {
             <div key={store.id} className="info-box" onClick={() => selectStore(store)}>
                 <h2>{store.name}</h2>
                 <p>{store.address}</p>
-                <button onClick={editStore}>Edit(Patch)</button>
+                <button onClick={() => setShowForm(!showForm)}>Edit</button>
                 <button onClick={deleteStore}>Delete</button>
             </div>
         )
@@ -84,6 +85,70 @@ function Stores() {
             )
         })}
 
+    const [formData, setFormData] = useState({
+        name: featuredStore.name,
+        address: featuredStore.address
+        })
+
+    function handleChange(e) {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        })
+        }
+
+    // PATCH //
+    function handleEdit(e) {
+        e.preventDefault()
+        fetch(`/stores/${featuredStore.id}`, {
+            method:"PATCH",
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify(formData)
+        })
+        .then(resp => resp.json())
+        .then(updatedStore => {
+            console.log(updatedStore)
+            const updatedStores = storesArray.map(originalStore => {
+                if (originalStore.id === updatedStore.id) {
+                    return updatedStore
+                } else {
+                    return originalStore
+                }
+            })
+            setStoresArray(updatedStores)
+            setShowForm(!showForm)
+        })
+    }
+
+    function displayForm() {
+        if (showForm) {
+            return(
+                <>
+                    <h3> Edit Store </h3>
+                    <form onSubmit={handleEdit} className="edit-form">
+                        <label htmlFor="name">Name</label>
+                        <input
+                            type="text"
+                            name="name"
+                            value={formData.name}
+                            defaultValue={featuredStore.name}
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="address">Address</label>
+                        <input
+                            type="text"
+                            name="address"
+                            value={formData.address}
+                            defaultValue={featuredStore.address}
+                            onChange={handleChange}
+                        />
+                        <input type="submit" value="Submit" />
+                    </form>
+                </>
+            )
+        }
+    }
+
     return (
         <>
             <div>
@@ -92,9 +157,12 @@ function Stores() {
             <div className="featured-store">
                 <h1>Stores</h1>
                 <h2>{featuredStore.name}</h2>
+                <div className="form-div">
+                    {displayForm()}
+                </div>
                 <h3>Revenue: ${featuredStoreRevenue}</h3>
                 <h3>Net Profit: ${featuredStoreNetProfit}</h3>
-                <h3>Products: ({inventoryByStore.length}) </h3>
+                <h3>Products ({inventoryByStore.length}): </h3>
                 <ol>
                     {products}
                 </ol>
