@@ -12,7 +12,7 @@ function Products() {
     
     const company_id = 1
     useEffect(() => {
-        fetch(`/products`)
+        fetch(`/1/sales_overview/products`)
         .then(resp=>resp.json())
         .then((data)=>{
             console.log(data)
@@ -21,15 +21,22 @@ function Products() {
         })
     }, [])
 
+    const products = []
+    productsArray.forEach(product => {
+        const is_in_products = products.some((obj) => (obj.id === product.id)) //check if the products variable has an item in it whose id matches the id of this product
+        if (!is_in_products) { //if it does not, add the product to the products array
+            products.push(product)
+        }
+        //if it does, skip it
+        }
+    )
+    console.log(products)
+
     // useEffect(() => {
     //     fetch(`${company_id}/products/${featuredProduct.id}`)
     //     .then(resp=>resp.json())
     //     .then((data)=>(setInventoryByProduct(data)))
     // }, [featuredProduct])
-
-    const products = productsArray.filter((product) => {
-        
-    })
 
     const cards = productsArray.map((product) => {
         // console.log(product)
