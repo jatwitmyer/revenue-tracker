@@ -72,17 +72,6 @@ function Sales() {
         )
     })
 
-function Sales() {
-
-    const [salesArray, setSalesArray] = useState([])
-
-    // useEffect(() => {
-    //     fetch("/sales")
-    //     .then(resp=>resp.json())
-    //     .then((data)=>(setSalesArray(data)))
-
-    // }, [])
-
     return (
     <>
     <div className="sales-sidebar">
@@ -100,6 +89,6 @@ function Sales() {
     </div>
     </>
     )
-}}
+}
 
 export default Sales
