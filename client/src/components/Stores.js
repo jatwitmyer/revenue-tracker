@@ -6,6 +6,7 @@ function Stores() {
     const [inventoryByStore, setInventoryByStore] = useState({})
     const [featuredStore, setFeaturedStore] = useState({})
     const [showForm, setShowForm] = useState(false)
+    const [showAddForm, setShowAddForm] = useState(false)
 
     console.log(featuredStore.sales)
     // console.log(storesArray)
@@ -121,66 +122,65 @@ function Stores() {
     }
 
     function displayForm() {
-        if (showForm) {
-            return(
-                <>
-                    <h3> Edit Store </h3>
-                    <form onSubmit={handleEdit} className="edit-form">
-                        <label htmlFor="name">Name</label>
-                        <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            defaultValue={featuredStore.name}
-                            onChange={handleChange}
-                        />
-                        <label htmlFor="address">Address</label>
-                        <input
-                            type="text"
-                            name="address"
-                            value={formData.address}
-                            defaultValue={featuredStore.address}
-                            onChange={handleChange}
-                        />
-                        <input type="submit" value="Submit" />
-                    </form>
-                </>
-            )
-        }
+        return(
+            <>
+                <h3> Edit Store </h3>
+                <form onSubmit={handleEdit} className="edit-form">
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        defaultValue={featuredStore.name}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="address">Address</label>
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        defaultValue={featuredStore.address}
+                        onChange={handleChange}
+                    />
+                    <input type="submit" value="Submit" />
+                </form>
+            </>
+        )
     }
 
-    const [showAddForm, setShowAddForm] = useState(false)
-
     function displayAddForm() {
+        // if (showAddForm)
         return (
             <>
-            <h3> Add a Store </h3>
-            <form onSubmit={handlePost} className="edit-form">
-                <label htmlFor="name">Name</label>
-                <input
-                    type="text"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                />
-                <label htmlFor="address">Address</label>
-                <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleChange}
-                />
-                <input type="submit" value="Submit" />
-            </form>
-        </>
+                {/* <h3> Add a Store </h3> */}
+                <form onSubmit={handlePost} className="edit-form">
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                    />
+                    <label htmlFor="address">Address</label>
+                    <input
+                        type="text"
+                        name="address"
+                        value={formData.address}
+                        onChange={handleChange}
+                    />
+                    <input type="submit" value="Submit" />
+                </form>
+            </>
         )
     }
 
     function handlePost(e) {
         e.preventDefault()
         const newStore = {
+            ...formData,
             name: e.target.name.value,
-            address: e.target.address.value
+            address: e.target.address.value,
+            company_id: 1
         }
         
         fetch('/stores', {
@@ -197,14 +197,18 @@ function Stores() {
         <>
             <div>
                 {cards}
-                {showAddForm ? displayAddForm() : <button onclick={setShowAddForm(!showAddForm)}>Add A Store</button>}
+            </div>
+            <div className="form-div">
+                    {showForm ? displayForm() : <></>}
+                </div>
+            <div>
+                <button onClick={() => setShowAddForm(!showAddForm)}>Add A Store</button>
+                {showAddForm ? displayAddForm() : <></>}
             </div>
             <div className="featured-store">
                 <h1>Stores</h1>
                 <h2>{featuredStore.name}</h2>
-                <div className="form-div">
-                    {displayForm()}
-                </div>
+
                 <h3>Revenue: ${featuredStoreRevenue}</h3>
                 <h3>Net Profit: ${featuredStoreNetProfit}</h3>
                 <h3>Products ({inventoryByStore.length}): </h3>
