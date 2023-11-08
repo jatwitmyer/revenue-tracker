@@ -12,21 +12,21 @@ function App() {
     const [productsArray, setProductsArray] = useState([])
 
     useEffect(() => {
-        fetch("http://localhost:3000/sales")
+        fetch("/sales")
         .then(resp=>resp.json())
         .then((data)=>(setSalesArray(data)))
 
     }, [])
 
     useEffect(() => {
-        fetch("http://localhost:3000/stores")
+        fetch("/stores")
         .then(resp=>resp.json())
         .then((data)=>(setStoresArray(data)))
 
     }, [])
 
     useEffect(() => {
-        fetch("http://localhost:3000/products")
+        fetch("/products")
         .then(resp=>resp.json())
         .then((data)=>(setProductsArray(data)))
 
