@@ -149,10 +149,55 @@ function Stores() {
         }
     }
 
+    const [showAddForm, setShowAddForm] = useState(false)
+
+    function displayAddForm() {
+        return (
+            <>
+            <h3> Add a Store </h3>
+            <form onSubmit={handlePost} className="edit-form">
+                <label htmlFor="name">Name</label>
+                <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                />
+                <label htmlFor="address">Address</label>
+                <input
+                    type="text"
+                    name="address"
+                    value={formData.address}
+                    onChange={handleChange}
+                />
+                <input type="submit" value="Submit" />
+            </form>
+        </>
+        )
+    }
+
+    function handlePost(e) {
+        e.preventDefault()
+        const newStore = {
+            name: e.target.name.value,
+            address: e.target.address.value
+        }
+        
+        fetch('/stores', {
+            method: "POST",
+            headers: {'content-type': 'application/json'},
+            body: JSON.stringify(newStore)
+        })
+        // .then(resp => resp.json())
+        // .then(data => console.log(data))
+        setShowAddForm(false)
+    }
+
     return (
         <>
             <div>
                 {cards}
+                {showAddForm ? displayAddForm() : <button onclick={setShowAddForm(!showAddForm)}>Add A Store</button>}
             </div>
             <div className="featured-store">
                 <h1>Stores</h1>
