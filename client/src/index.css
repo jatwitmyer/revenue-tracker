@@ -2,4 +2,26 @@
     text-align: center;
   }
   
-  
+.info-box {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  padding: 20px;
+  width: 300px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.store-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+
+.store-location {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0;
+}
