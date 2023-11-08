@@ -3,23 +3,27 @@ import React, { useEffect, useState } from "react";
 function Products() {
 
     const [productsArray, setProductsArray] = useState([])
-    const [inventoryByProduct, setInventoryByProduct] = useState({})
     const [featuredProduct, setFeaturedProduct] = useState({})
 
+    // console.log(featuredProduct)
     // console.log(featuredProduct.id)
-    console.log(productsArray)
-    // console.log(inventoryByProduct)
+    // console.log(productsArray)
     
-    const company_id = 1
     useEffect(() => {
-        fetch(`/1/sales_overview/products`)
+        fetch("/2/sales_overview/products")
         .then(resp=>resp.json())
         .then((data)=>{
-            console.log(data)
+            // console.log(data)
             setProductsArray(data)
             setFeaturedProduct(data[0])
         })
     }, [])
+
+    // // useEffect(() => {
+    // //     fetch(`/products/1`)
+    // //     .then(resp=>resp.json())
+    // //     .then((data)=>console.log(data))
+    // // }, [])
 
     const products = []
     productsArray.forEach(product => {
@@ -30,22 +34,16 @@ function Products() {
         //if it does, skip it
         }
     )
-    console.log(products)
+    // // console.log(products)
 
-    // useEffect(() => {
-    //     fetch(`${company_id}/products/${featuredProduct.id}`)
-    //     .then(resp=>resp.json())
-    //     .then((data)=>(setInventoryByProduct(data)))
-    // }, [featuredProduct])
-
-    const cards = productsArray.map((product) => {
+    const cards = products.map((product) => {
         // console.log(product)
         return (
             <div key={product.id} className="info-box">
                 <h2 onClick={() => selectProduct(product)}>{product.name}</h2>
                 <p>{product.serial_number}</p>
                 <button onClick={editProduct}>Edit(Patch)</button>
-                <button onClick={deleteProduct}>Delete</button>
+                <button onClick={() => deleteProduct(product.id)}>Delete</button>
             </div>
         )
     })
@@ -55,39 +53,30 @@ function Products() {
         setFeaturedProduct(product)
     }
 
-    function editProduct(e) {
-        console.log("edit selected product")
+    function editProduct() {
+        // console.log("edit selected product")
         // console.log(e.target)
     }
 
-    function deleteProduct() {
-        console.log("delete selected")
+    function deleteProduct(id) {
+        console.log("fuck runtime errors to death")
+        fetch(`/products/${id}`, {
+            method: "DELETE"
+        })
+        // remove product with given id from products
+        window.location.reload(false)
     }
-
-    // let products = <li></li>
-    // if (inventoryByStore[0] !== undefined){
-    //     products = inventoryByStore.map((inventory_item) => {
-    //         return (
-    //             <li key={inventory_item.id}><span className="products-subheader">Product name:</span> {inventory_item.product.name}
-    //                 <ul>
-    //                     <li>Price: ${inventory_item.price}</li>
-    //                     <li>Manufacturing Cost: ${inventory_item.product.manufacturing_cost}</li>
-    //                     <li>Serial Number: {inventory_item.product.serial_number}</li>
-    //                 </ul>
-    //             </li>
-    //         )
-    //     })}
 
     return (
         <>
             <div>
-                {/* {cards} */}
+                {cards}
             </div>
             <div className="featured-product">
                 <h1>Product</h1>
                 <h2>{featuredProduct.name}</h2>
                 <h3>Revenue: </h3>
-                <h3>Net Profit: </h3>
+                <h3>Sales: </h3>
             </div>
         </>
     )
