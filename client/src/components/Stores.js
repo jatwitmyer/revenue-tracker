@@ -6,10 +6,9 @@ function Stores() {
     const [inventoryByStore, setInventoryByStore] = useState({})
     const [featuredStore, setFeaturedStore] = useState({})
 
-    
-    console.log(featuredStore.id)
+    console.log(featuredStore.sales)
     // console.log(storesArray)
-    console.log(inventoryByStore)
+    // console.log(inventoryByStore)
 
     const company_id = 1
     useEffect(() => {
@@ -27,11 +26,29 @@ function Stores() {
         .then((data)=>(setInventoryByStore(data)))
     }, [featuredStore])
 
+    const revenuePerSale = []
+    if (featuredStore.sales !== undefined) {
+        featuredStore.sales.forEach(sale => {
+            revenuePerSale.push(sale.price)
+        })
+    }
+    const featuredStoreRevenue = revenuePerSale.reduce((partialSum, a) => partialSum + a, 0).toFixed(2) //calculate revenue for a store to 2 decimals
+    console.log(featuredStoreRevenue)
+
+    const netProfitPerSale = []
+    if (featuredStore.sales !== undefined) {
+        featuredStore.sales.forEach(sale => {
+            netProfitPerSale.push(sale.profit_margin)
+        })
+    }
+    const featuredStoreNetProfit = netProfitPerSale.reduce((partialSum, a) => partialSum + a, 0).toFixed(2) //calculate revenue for a store to 2 decimals
+    console.log(featuredStoreNetProfit)
+
     const cards = storesArray.map((store) => {
         // console.log(store)
         return (
-            <div key={store.id} className="info-box">
-                <h2 onClick={() => selectStore(store)}>{store.name}</h2>
+            <div key={store.id} className="info-box" onClick={() => selectStore(store)}>
+                <h2>{store.name}</h2>
                 <p>{store.address}</p>
                 <button onClick={editStore}>Edit(Patch)</button>
                 <button onClick={deleteStore}>Delete</button>
@@ -75,8 +92,8 @@ function Stores() {
             <div className="featured-store">
                 <h1>Stores</h1>
                 <h2>{featuredStore.name}</h2>
-                <h3>Revenue: </h3>
-                <h3>Net Profit: </h3>
+                <h3>Revenue: ${featuredStoreRevenue}</h3>
+                <h3>Net Profit: ${featuredStoreNetProfit}</h3>
                 <h3>Products: ({inventoryByStore.length}) </h3>
                 <ol>
                     {products}
