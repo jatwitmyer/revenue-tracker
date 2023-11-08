@@ -1,7 +1,9 @@
 .App {
-    text-align: center;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+/* css for store */
 .info-box {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
@@ -11,17 +13,93 @@
   border-radius: 5px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
-
 .store-name {
   font-size: 24px;
   font-weight: bold;
   color: #333;
   margin: 0;
 }
-
-
 .store-location {
   font-size: 16px;
   color: #666;
   margin: 10px 0;
+}
+
+/* sample css for sales */
+
+.sales-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.sales-information-box {
+  text-align: center;
+  background-color: #f0f0f0;
+  padding: 20px;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  margin-top: 10px;
+  margin-bottom: auto;
+}
+
+.sales-sidebar {
+  width: 200px;
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  margin-top: 20px;
+  margin-bottom: auto;
+}
+
+.sales-sidebar button {
+  display: block;
+  color: #b91414;
+  text-decoration: none;
+  margin-bottom: 10px;
+  
+}
+/* 
+navbar sample css */
+
+.navbar {
+  background-color: rgb(118, 118, 122); 
+  overflow: hidden;
+  display: flex;
+  list-style-type: none;
+  margin: auto;
+  padding: 1rem;
+  width: 90%;
+  border-radius: 10px;
+  align-content: center;
+}
+
+/* Navbar links */
+.navbar li {
+  float: none;
+  display: block; 
+  color: #000000; 
+  text-align: center; 
+  padding: 1rem;
+  text-align: center;
+  display: flex;
+  margin: 0 auto;
+  font-size: large;
+  font: bold;
+}
+
+
+.navbar li:hover {
+  background-color: rgb(0, 128, 255);
+}
+
+
+.navbar .active {
+  background-color: rgb(0, 128, 255);
+
+}
+.navbar a:visited {
+  color: #000000;
 }

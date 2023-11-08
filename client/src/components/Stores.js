@@ -7,9 +7,9 @@ function Stores() {
     const [featuredStore, setFeaturedStore] = useState({})
 
     
-    console.log(featuredStore.id)
+    // console.log(featuredStore.id)
     // console.log(storesArray)
-    console.log(inventoryByStore)
+    // console.log(inventoryByStore)
 
     const company_id = 1
     useEffect(() => {

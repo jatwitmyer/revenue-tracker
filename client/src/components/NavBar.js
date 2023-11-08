@@ -5,10 +5,10 @@ function NavBar() {
 
     return (
         <>
-            <ul>
-                <li><NavLink to="/sales">Sales</NavLink></li>
-                <li><NavLink to="/stores">Stores</NavLink></li>
-                <li><NavLink to="/products">Products</NavLink></li>
+            <ul className = "navbar">
+                <li><NavLink to="/sales">Sales Overview</NavLink></li>
+                <li><NavLink to="/stores">Store Details</NavLink></li>
+                <li><NavLink to="/products">Product Details</NavLink></li>
             </ul>
         </>
     )
