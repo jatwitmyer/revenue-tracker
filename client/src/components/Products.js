@@ -53,7 +53,7 @@ function Products() {
         setFeaturedProduct(product)
     }
 
-    function editProduct() {
+    function editProduct(e) {
         // console.log("edit selected product")
         // console.log(e.target)
     }
