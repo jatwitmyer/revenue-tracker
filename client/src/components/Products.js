@@ -43,7 +43,7 @@ function Products() {
                 <div key={product.id} className="storecontentbox" onClick={() => selectProduct(product)}>
                     <h2 >{product.name}</h2>
                     <p>Serial Number: # {product.serial_number}</p>
-                    <button className="cardbuttons" onClick={editProduct}>Edit(Patch)</button>
+                    <button className="cardbuttons" onClick={editProduct}>Edit</button>
                     <button className="cardbuttons"onClick={() => deleteProduct(product.id)}>Delete</button>
                 </div>
             </div>

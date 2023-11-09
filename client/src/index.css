@@ -97,6 +97,15 @@ body {
   border-radius: 10px;
 }
 
+/* .storecontentbox Hover Effect */
+.storecontentbox:hover {
+  text-decoration: underline;
+}
+
+.storecontentbox:active {
+  text-decoration: none;
+}
+
 .prod-contentbox {
   background-color: #aaa;
   width: 100%;
