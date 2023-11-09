@@ -219,7 +219,7 @@ function Stores() {
                             {showForm ? displayForm() : <></>}
                         </div>
                     <div>
-                        <button className="buttons" onClick={() => setShowAddForm(!showAddForm)}>Register a New Store</button>
+                        <button className="addbutton" onClick={() => setShowAddForm(!showAddForm)}>Register a New Store</button>
                         {showAddForm ? displayAddForm() : <></>}
                     </div>
                     {cards}

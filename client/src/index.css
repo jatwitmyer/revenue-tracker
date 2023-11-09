@@ -49,6 +49,11 @@ body {
   color: black;
 }
 
+.topnav a:active {
+  background-color: #ffa5a5;
+  color: black;
+}
+
 /* Create two unequal columns that floats next to each other */
 /* Left column */
 .leftcolumn {
@@ -116,8 +121,8 @@ body {
 
 .input-text {
   height: 2rem;
-  width: 80%;
-  font-size: 18px;
+  width: 90%;
+  font-size: 12px;
   margin: 3px;
 }
 
@@ -130,14 +135,24 @@ label {
   height: 2rem;
   width: 60%;
   color: rgb(2, 2, 2);
-  font-size: 18px;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.addbutton {
+  height: 2rem;
+  width: 60%;
+  color: rgb(2, 2, 2);
+  font-size: 12px;
   margin-top: 20px;
+  margin-left: 50px;
+  background-color: #5f7afe
 }
 
 .cardbuttons {
   float: right;
   height: 2rem;
-  width: 20%;
+  width: 30%;
   color: rgb(2, 2, 2);
-  font-size: 18px;
+  font-size: 12px;
 }

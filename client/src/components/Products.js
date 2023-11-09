@@ -39,11 +39,13 @@ function Products() {
     const cards = products.map((product) => {
         // console.log(product)
         return (
-            <div key={product.id} className="info-box">
-                <h2 onClick={() => selectProduct(product)}>{product.name}</h2>
-                <p>{product.serial_number}</p>
-                <button onClick={editProduct}>Edit(Patch)</button>
-                <button onClick={() => deleteProduct(product.id)}>Delete</button>
+           <div className="card">
+                <div key={product.id} className="contentbox">
+                    <h2 onClick={() => selectProduct(product)}>{product.name}</h2>
+                    <p>{product.serial_number}</p>
+                    <button onClick={editProduct}>Edit(Patch)</button>
+                    <button onClick={() => deleteProduct(product.id)}>Delete</button>
+                </div>
             </div>
         )
     })
@@ -68,17 +70,23 @@ function Products() {
     }
 
     return (
-        <>
-            <div>
+        <div>
+            <div lassName="rightcolumn">
                 {cards}
             </div>
-            <div className="featured-product">
-                <h1>Product</h1>
-                <h2>{featuredProduct.name}</h2>
-                <h3>Revenue: </h3>
-                <h3>Sales: </h3>
+            <div className="row">
+                <div className="leftcolumn">
+                    <div className="card">
+                        <h1>Product</h1>
+                        <div className="contentbox">
+                        <h2>{featuredProduct.name}</h2>
+                        <h3>Revenue: </h3>
+                        <h3>Sales: </h3>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 
