@@ -4,12 +4,16 @@ import { NavLink } from 'react-router-dom';
 function NavBar() {
 
     return (
-        <>
-            <ul className = "navbar">
-                <li><NavLink to="/sales">Sales Overview</NavLink></li>
-                <li><NavLink to="/stores">Store Details</NavLink></li>
-                <li><NavLink to="/products">Product Details</NavLink></li>
-            </ul>
+        <>  
+            <div class="header">
+                <h1>Revenue Tracker</h1>
+                <p>Welcome to Revenue Tracker!</p>
+            </div>
+            <div className = "topnav">
+                <a><NavLink to="/sales">Sales Overview</NavLink></a>
+                <a><NavLink to="/stores">Store Details</NavLink></a>
+                <a><NavLink to="/products">Product Details</NavLink></a>
+            </div>
         </>
     )
 }
