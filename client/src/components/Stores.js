@@ -8,7 +8,7 @@ function Stores() {
     const [showForm, setShowForm] = useState(false)
     const [showAddForm, setShowAddForm] = useState(false)
 
-    console.log(featuredStore.sales)
+    // console.log(featuredStore.sales)
     // console.log(storesArray)
     // console.log(inventoryByStore)
 
@@ -35,7 +35,7 @@ function Stores() {
         })
     }
     const featuredStoreRevenue = revenuePerSale.reduce((partialSum, a) => partialSum + a, 0).toFixed(2) //calculate revenue for a store to 2 decimals
-    console.log(featuredStoreRevenue)
+    // console.log(featuredStoreRevenue)
 
     const netProfitPerSale = []
     if (featuredStore.sales !== undefined) {
@@ -44,7 +44,7 @@ function Stores() {
         })
     }
     const featuredStoreNetProfit = netProfitPerSale.reduce((partialSum, a) => partialSum + a, 0).toFixed(2) //calculate revenue for a store to 2 decimals
-    console.log(featuredStoreNetProfit)
+    // console.log(featuredStoreNetProfit)
 
     const cards = storesArray.map((store) => {
         // console.log(store)
@@ -53,7 +53,7 @@ function Stores() {
                 <div className="storecontentbox">
                     <h2>{store.name}</h2>
                     <p>{store.address}</p>
-                    <button className="cardbuttons" onClick={() => setShowForm(!showForm)}>Edit</button>
+                    <button className="cardbuttons" onClick={() => editStore(store)}>Edit</button>
                     <button className="cardbuttons" onClick={deleteStore}>Delete</button>
                 </div>
             </div>
@@ -65,9 +65,15 @@ function Stores() {
         setFeaturedStore(store)
     }
 
-    function editStore(e) {
+    function editStore(store) {
         console.log("edit selected")
-        console.log(e.target) // Hello Jessica, would you like to play a game? -Love, Event Listener
+        console.log("store", store)
+        setShowForm(true)
+        setFormData({
+            name: store.name,
+            address: store.address
+            })
+        
     }
 
     function deleteStore() {
@@ -78,7 +84,7 @@ function Stores() {
     if (inventoryByStore[0] !== undefined){
         products = inventoryByStore.map((inventory_item) => {
             return (
-                <div className="card">
+                <div className="card" key={inventory_item.id}>
                     <div className="prod-contentbox">
                         <li key={inventory_item.id}><strong>Product name:</strong> {inventory_item.product.name}
                         </li>
@@ -107,6 +113,7 @@ function Stores() {
     // PATCH //
     function handleEdit(e) {
         e.preventDefault()
+        console.log(featuredStore)
         fetch(`/stores/${featuredStore.id}`, {
             method:"PATCH",
             headers: {'Content-type': 'application/json'},
@@ -123,7 +130,7 @@ function Stores() {
                 }
             })
             setStoresArray(updatedStores)
-            setShowForm(!showForm)
+            setShowForm(false)
         })
     }
 
@@ -206,8 +213,12 @@ function Stores() {
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(newStore)
         })
-        // .then(resp => resp.json())
-        // .then(data => console.log(data))
+        .then(resp => resp.json())
+        .then(newStore => {
+            console.log(newStore)
+            storesArray.push(newStore)
+            // setStoresArray(updatedStores)
+        })
         setShowAddForm(false)
     }
 
@@ -233,7 +244,7 @@ function Stores() {
                         <p>{featuredStore.address}</p>
                         <div className="contentbox">
                             <h3>Revenue: ${featuredStoreRevenue}</h3>
-                            <h3>Net Profit: ${featuredStoreNetProfit}</h3>
+                            <h3>Net Profit: {Math.sign(featuredStoreNetProfit) === -1 ? "-$" + Math.abs(featuredStoreNetProfit) : "$" + featuredStoreNetProfit}</h3>
                         </div>
                             <h3>Products ({inventoryByStore.length}): </h3>
                             <ol>
