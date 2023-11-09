@@ -74,20 +74,36 @@ function Sales() {
 
     return (
     <>
-    <div className="sales-sidebar">
-        <button>View company revenue</button>
-        <button onClick = {() => viewSales(populateSales)}>View all company sales</button>
-        <button onClick = {() => viewStores(populateStores)}>View all company stores</button>
-        <button onClick = {() => viewProducts(populateProducts)}>View all company products</button>
+    
+    <div className="rightcolumn">
+        <h2>Company Stats</h2>
+        <div className="card">
+            <h3 className="contentbox">View company revenue</h3>
+        </div>
+        <div className="card">
+            <h3 className="contentbox" onClick = {() => viewSales(populateSales)}>View all company sales</h3>
+        </div>
+        <div className="card">
+            <h3 className="contentbox" onClick = {() => viewStores(populateStores)}>View all company stores</h3>
+        </div>
+        <div className="card">
+            <h3 className="contentbox" onClick = {() => viewProducts(populateProducts)}>View all company products</h3>
+        </div>
+        
     </div>
-    <div className="sales-container">
-        <div className="sales-information-box">
-            <h1>Company Name</h1>
-            <p>Welcome, employee</p>
-            {viewContent}
+    <div className="row">
+        <div className="leftcolumn">
+            <div className="card">
+                <h2>Company Name</h2>
+                <h5>Welcome, employee</h5>
+                <div className="contentbox">
+                    {viewContent}
+                </div>
+            </div>
         </div>
     </div>
     </>
+    
     )
 }
 
