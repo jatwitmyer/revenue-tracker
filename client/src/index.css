@@ -87,6 +87,7 @@ body {
   padding-right: 20px;
   padding-bottom: 40px;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 .prod-contentbox {
@@ -146,7 +147,8 @@ label {
   font-size: 22px;
   margin-top: 20px;
   margin-left: 10px;
-  background-color: #5f7afe
+  background-color: #5f7afe;
+  cursor: pointer;
 }
 
 .cardbuttons {
@@ -155,4 +157,5 @@ label {
   width:auto;
   color: rgb(2, 2, 2);
   font-size: 12px;
+  cursor: pointer;
 }
