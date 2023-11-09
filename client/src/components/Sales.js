@@ -41,11 +41,13 @@ function Sales() {
     const populateProducts = productsArray.map((product) => {
         return(
             <div className="card">
-                <div className="contentbox" key={product.id} >
-                    <p>{product.name}</p>
-                    <p>Manufacturing Cost: {product.manufacturing_cost}</p>
-                    <p>Serial Number: {product.serial_number}</p>
-                    <p>Units Sold: {product.sales.length}</p>
+                <div className="prod-contentbox" key={product.id} >
+                    <li>Product name: {product.name}</li>
+                    <ul>
+                        <li>Manufacturing Cost: ${product.manufacturing_cost}</li>
+                        <li>Serial Number: #{product.serial_number}</li>
+                        <li>Units Sold: {product.sales.length}</li>
+                    </ul>
                 </div >
             </div>
         )
@@ -75,20 +77,31 @@ function Sales() {
         return(
             <div className="card">
                 <div className="contentbox" key = {store.id}>
-                    <p>{store.name}</p>
-                    <p>{store.address}</p>
+                    <h3>"{store.name}"</h3>
+                    <p>Location: {store.address}</p>
                 </div>
             </div>
         )
     })
 
+    function viewRevenue(populateRevenue){
+        setViewContent(<div className="card">{populateRevenue}</div>)
+    }
+
+    const populateRevenue = 
+            <div className="card">
+                <div className="contentbox"> 
+                    <h3>Nothing to see here..</h3>
+                    <img src="https://i.ibb.co/FJWCc3f/Screenshot-2023-11-09-113224.png" alt="Screenshot-2023-11-09-113224" border="0"></img>
+                </div>
+            </div>
+        
+    
+
     return (
     <>
     <div className="rightcolumn">
-        <h2 className="this-htag">Company Stats</h2>
-        <div className="card">
-            <h3 className="contentbox">View company revenue</h3>
-        </div>
+        <h2>Overview: </h2>
         <div className="card">
             <h3 className="contentbox" onClick = {() => viewSales(populateSales)}>View all company sales</h3>
         </div>
@@ -98,6 +111,9 @@ function Sales() {
         <div className="card">
             <h3 className="contentbox" onClick = {() => viewProducts(populateProducts)}>View all company products</h3>
         </div>
+        <div className="card">
+            <h3 className="contentbox" onClick = {() => viewRevenue(populateRevenue)}>View company revenue</h3>
+        </div>
         
     </div>
     <div className="row">
@@ -105,9 +121,9 @@ function Sales() {
             <div className="card">
                 <h2>Company Name</h2>
                 <h5>Welcome, employee</h5>
-                <div >
+                <ol >
                     {viewContent}
-                </div>
+                </ol>
             </div>
         </div>
     </div>
