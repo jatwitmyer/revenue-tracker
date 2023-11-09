@@ -54,7 +54,7 @@ function Stores() {
                     <h2>{store.name}</h2>
                     <p>{store.address}</p>
                     <button className="cardbuttons" onClick={() => editStore(store)}>Edit</button>
-                    <button className="cardbuttons" onClick={deleteStore}>Delete</button>
+                    <button className="cardbuttons" onClick={() => deleteStore(store)}>Delete</button>
                 </div>
             </div>
         )
@@ -76,8 +76,18 @@ function Stores() {
         
     }
 
-    function deleteStore() {
-        console.log("delete selected")
+    function deleteStore(store) {
+        // fetch(`/store/${store.id}`, {
+        //     method: "DELETE"
+        // })
+        // const updatedStores = []
+        // storesArray.forEach(item => {
+        //     if (item.id !== store.id) {
+        //         updatedStores.push(item
+        //     }
+        // })
+        // setStoresArray(updatedStores)
+        // // window.location.reload(false)
     }
 
     let products = <li></li>
@@ -160,6 +170,7 @@ function Stores() {
                     />
                     <br/>
                     <br/>
+                    <input className="buttons" type="button" value="Cancel" onClick={() => setShowForm(false)}/>
                     <input className="buttons" type="submit" value="Submit" />
                 </form>
             </div>
@@ -178,6 +189,7 @@ function Stores() {
                         type="text"
                         name="name"
                         value={formData.name}
+                        defaultValue={""}
                         onChange={handleChange}
                         className="input-text"
                     />
@@ -188,6 +200,7 @@ function Stores() {
                         type="text"
                         name="address"
                         value={formData.address}
+                        defaultValue={""}
                         onChange={handleChange}
                         className="input-text"
                     />
@@ -217,7 +230,6 @@ function Stores() {
         .then(newStore => {
             console.log(newStore)
             storesArray.push(newStore)
-            // setStoresArray(updatedStores)
         })
         setShowAddForm(false)
     }
@@ -227,11 +239,11 @@ function Stores() {
             <div>
                 <div className="rightcolumn">
                     <div className="form-div">
-                            {showForm ? displayForm() : <></>}
+                            {showForm === true ? displayForm() : <></>}
                         </div>
                     <div>
                         <button className="addbutton" onClick={() => setShowAddForm(!showAddForm)}>Register a New Store</button>
-                        {showAddForm ? displayAddForm() : <></>}
+                        {showAddForm === true ? displayAddForm() : <></>}
                     </div>
                     {cards}
                 </div>
