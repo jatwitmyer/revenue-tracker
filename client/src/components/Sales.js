@@ -45,7 +45,7 @@ function Sales() {
                     <li>Product name: {product.name}</li>
                     <ul>
                         <li>Manufacturing Cost: ${product.manufacturing_cost}</li>
-                        <li>Serial Number: #{product.serial_number}</li>
+                        <li>Serial Number: # {product.serial_number}</li>
                         <li>Units Sold: {product.sales.length}</li>
                     </ul>
                 </div >
