@@ -73,6 +73,7 @@ function Stores() {
             name: store.name,
             address: store.address
             })
+        
     }
 
     function deleteStore() {
@@ -212,8 +213,12 @@ function Stores() {
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(newStore)
         })
-        // .then(resp => resp.json())
-        // .then(data => console.log(data))
+        .then(resp => resp.json())
+        .then(newStore => {
+            console.log(newStore)
+            storesArray.push(newStore)
+            // setStoresArray(updatedStores)
+        })
         setShowAddForm(false)
     }
 
