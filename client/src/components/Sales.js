@@ -102,17 +102,19 @@ function Sales() {
     <>
     <div className="rightcolumn">
         <h2>Overview: </h2>
-        <div className="card">
-            <h3 className="contentbox" onClick = {() => viewSales(populateSales)}>View all company sales</h3>
-        </div>
-        <div className="card">
-            <h3 className="contentbox" onClick = {() => viewStores(populateStores)}>View all company stores</h3>
-        </div>
-        <div className="card">
-            <h3 className="contentbox" onClick = {() => viewProducts(populateProducts)}>View all company products</h3>
-        </div>
-        <div className="card">
-            <h3 className="contentbox" onClick = {() => viewRevenue(populateRevenue)}>View company revenue</h3>
+        <div className="scrollable-content">
+            <div className="card">
+                <h3 className="contentbox" onClick = {() => viewSales(populateSales)}>View all company sales</h3>
+            </div>
+            <div className="card">
+                <h3 className="contentbox" onClick = {() => viewStores(populateStores)}>View all company stores</h3>
+            </div>
+            <div className="card">
+                <h3 className="contentbox" onClick = {() => viewProducts(populateProducts)}>View all company products</h3>
+            </div>
+            <div className="card">
+                <h3 className="contentbox" onClick = {() => viewRevenue(populateRevenue)}>View company revenue</h3>
+            </div>
         </div>
         
     </div>

@@ -259,7 +259,10 @@ function Stores() {
                         <button className="addbutton" onClick={addStore}>Register a New Store</button>
                         {showAddForm === true ? displayAddForm() : <></>}
                     </div>
-                    {createCards()}
+                    <br/>
+                    <div className="scrollable-content">
+                        {createCards()}
+                    </div>
                 </div>
             </div>
             <div className="row">
