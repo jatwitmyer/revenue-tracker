@@ -63,7 +63,12 @@ body {
 .leftcolumn {
   float: left;
   width: 70%; 
-  margin-left: 20px; /* Add margin to the right side to create space */
+  margin-left: 20px; 
+  /* overflow-y: scroll;Add margin to the right side to create space */
+}
+.scrollable-content {
+  max-height: 300px; 
+  overflow-y: scroll; 
 }
 
 .rightcolumn {
@@ -74,6 +79,7 @@ body {
   padding-left: 20px;
   margin-left: 20px;
   border-radius: 10px;
+  /* overflow-y: scroll; */
 }
 
 /* Fake image */
