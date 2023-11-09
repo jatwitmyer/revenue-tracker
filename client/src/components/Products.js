@@ -40,8 +40,8 @@ function Products() {
         // console.log(product)
         return (
            <div className="card">
-                <div key={product.id} className="contentbox">
-                    <h2 onClick={() => selectProduct(product)}>{product.name}</h2>
+                <div key={product.id} className="storecontentbox" onClick={() => selectProduct(product)}>
+                    <h2 >{product.name}</h2>
                     <p>{product.serial_number}</p>
                     <button onClick={editProduct}>Edit(Patch)</button>
                     <button onClick={() => deleteProduct(product.id)}>Delete</button>
@@ -71,7 +71,7 @@ function Products() {
 
     return (
         <div>
-            <div lassName="rightcolumn">
+            <div className="rightcolumn">
                 {cards}
             </div>
             <div className="row">
