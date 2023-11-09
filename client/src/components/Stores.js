@@ -65,6 +65,14 @@ function Stores() {
         setFeaturedStore(store)
     }
 
+    function addStore() {
+        setShowAddForm(true)
+        setFormData({
+            name: "",
+            address: ""
+        })
+    }
+
     function editStore(store) {
         console.log("edit selected")
         console.log("store", store)
@@ -77,17 +85,18 @@ function Stores() {
     }
 
     function deleteStore(store) {
-        // fetch(`/store/${store.id}`, {
-        //     method: "DELETE"
-        // })
-        // const updatedStores = []
-        // storesArray.forEach(item => {
-        //     if (item.id !== store.id) {
-        //         updatedStores.push(item
-        //     }
-        // })
-        // setStoresArray(updatedStores)
-        // // window.location.reload(false)
+        console.log(store.id)
+        fetch(`/stores/${store.id}`, {
+            method: "DELETE"
+        })
+        const updatedStores = []
+        storesArray.forEach(item => {
+            if (item.id !== store.id) {
+                updatedStores.push(item)
+            }
+        })
+        setStoresArray(updatedStores)
+        // window.location.reload(false)
     }
 
     let products = <li></li>
@@ -170,8 +179,8 @@ function Stores() {
                     />
                     <br/>
                     <br/>
+                    <input className="buttons" type="submit" value="Submit"/>
                     <input className="buttons" type="button" value="Cancel" onClick={() => setShowForm(false)}/>
-                    <input className="buttons" type="submit" value="Submit" />
                 </form>
             </div>
         )
@@ -206,7 +215,8 @@ function Stores() {
                     />
                     <br/>
                     <br/>
-                    <input className="buttons" type="submit" value="Done" />
+                    <input className="buttons" type="submit" value="Submit" />
+                    <input className="buttons" type="button" value="Cancel" onClick={() => setShowAddForm(false)}/>
                 </form>
             </div>
         )
@@ -226,12 +236,13 @@ function Stores() {
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(newStore)
         })
-        .then(resp => resp.json())
-        .then(newStore => {
-            console.log(newStore)
-            storesArray.push(newStore)
-        })
+        // .then(resp => resp.json())
+        // .then(newStore => {
+        //     console.log(newStore)
+        //     storesArray.push(newStore)
+        // })
         setShowAddForm(false)
+        window.location.reload(false)
     }
 
     return (
@@ -242,7 +253,7 @@ function Stores() {
                             {showForm === true ? displayForm() : <></>}
                         </div>
                     <div>
-                        <button className="addbutton" onClick={() => setShowAddForm(!showAddForm)}>Register a New Store</button>
+                        <button className="addbutton" onClick={addStore}>Register a New Store</button>
                         {showAddForm === true ? displayAddForm() : <></>}
                     </div>
                     {cards}
