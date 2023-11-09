@@ -247,9 +247,11 @@ function Stores() {
                             <h3>Net Profit: {Math.sign(featuredStoreNetProfit) === -1 ? "-$" + Math.abs(featuredStoreNetProfit) : "$" + featuredStoreNetProfit}</h3>
                         </div>
                             <h3>Products ({inventoryByStore.length}): </h3>
-                            <ol>
-                                {products}
-                            </ol>
+                            <div className="scrollable-content">
+                                <ol>
+                                    {products}
+                                </ol>
+                            </div>
                     </div>
                 </div>
             </div>

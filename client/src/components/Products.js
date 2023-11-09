@@ -73,7 +73,9 @@ function Products() {
         <div>
             <div className="rightcolumn">
                 <h2 className="this-htag">Product List</h2>
-                {cards}
+                <div className="scrollable-content">
+                    {cards}
+                </div>
             </div>
             <div className="row">
                 <div className="leftcolumn">
