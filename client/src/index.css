@@ -1,101 +1,3 @@
-/* .App {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
-/* css for store */
-/* .info-box {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: 300px;
-  text-align: center;
-  border-radius: 5px;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-.store-name {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
-  margin: 0;
-}
-.store-location {
-  font-size: 16px;
-  color: #666;
-  margin: 10px 0;
-} */
-
-/* sample css for sales */
-
-/* .sales-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-
-.sales-information-box {
-  text-align: center;
-  background-color: #f0f0f0;
-  padding: 20px;
-  border: 1px solid #ccc;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-  margin-top: 10px;
-  margin-bottom: auto;
-} */
-
-/* 
-
-.sales-sidebar button {
-  display: block;
-  text-decoration: none;
-  margin-bottom: 10px;
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #000000;
-  background-color: #D9D9D9;
-  display: block;  
-} */
-/* 
-navbar sample css */
-
-/* .navbar {
-  background-color: #D9D9D9;
-  height: 20%;
-  width: 100%;
-  padding: 4rem;
-  display: flex;
-  border-radius: 10px;
-  justify-content: center;
-  
-}
-
-.navbar button {
-  margin-bottom: 10px;
-  padding: 30px 30px 30px 30px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #000000;
-  display: block;
-  text-align: center;
-  background-color: #D9D9D9
-}
-
-
-.navbar li:hover {
-  background-color: rgb(0, 128, 255);
-}
-
-
-.navbar .active {
-  background-color: rgb(0, 128, 255);
-
-}
-.navbar a:visited {
-  color: #000000;
-} */ 
 *{
   box-sizing: border-box;
 }
@@ -125,6 +27,10 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+}
+
+.this-htag {
+  text-align: center;
 }
 
 /* Style the topnav links */
@@ -166,7 +72,23 @@ body {
   width: 100%;
   padding: 20px;
   margin-right: 20px;
-  
+}
+
+.storecontentbox {
+  background-color: #aaa;
+  width: 100%;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 40px;
+  margin-right: 20px;
+}
+
+.prod-contentbox {
+  background-color: #aaa;
+  width: 100%;
+  padding: 40px;
+  margin-right: 20px;
 }
 
 /* Add a card effect for articles */
@@ -192,17 +114,30 @@ body {
   margin-top: 20px;
 }
 
-.sales-sidebar {
-  width: 200px;
-  background-color: #333;
-  color: #fff;
-  padding: 20px;
-  margin-top: 20px;
-  margin-bottom: auto;
-  height: 100%;
-  width: 300px;
-  background-color: rgb(0, 128, 255);
-  right: 0;
-  padding-top: 100px;
+.input-text {
+  height: 2rem;
+  width: 80%;
+  font-size: 18px;
+  margin: 3px;
 }
 
+label {
+  font-size: large;
+}
+
+.buttons {
+  margin-left: 80px;
+  height: 2rem;
+  width: 60%;
+  color: rgb(2, 2, 2);
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.cardbuttons {
+  float: right;
+  height: 2rem;
+  width: 20%;
+  color: rgb(2, 2, 2);
+  font-size: 18px;
+}

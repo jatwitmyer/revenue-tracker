@@ -49,11 +49,13 @@ function Stores() {
     const cards = storesArray.map((store) => {
         // console.log(store)
         return (
-            <div key={store.id} className="info-box" onClick={() => selectStore(store)}>
-                <h2>{store.name}</h2>
-                <p>{store.address}</p>
-                <button onClick={() => setShowForm(!showForm)}>Edit</button>
-                <button onClick={deleteStore}>Delete</button>
+            <div key={store.id} className="card" onClick={() => selectStore(store)}>
+                <div className="storecontentbox">
+                    <h2>{store.name}</h2>
+                    <p>{store.address}</p>
+                    <button className="cardbuttons" onClick={() => setShowForm(!showForm)}>Edit</button>
+                    <button className="cardbuttons" onClick={deleteStore}>Delete</button>
+                </div>
             </div>
         )
     })
@@ -76,13 +78,17 @@ function Stores() {
     if (inventoryByStore[0] !== undefined){
         products = inventoryByStore.map((inventory_item) => {
             return (
-                <li key={inventory_item.id}><span className="products-subheader">Product name:</span> {inventory_item.product.name}
-                    <ul>
-                        <li>Price: ${inventory_item.price}</li>
-                        <li>Manufacturing Cost: ${inventory_item.product.manufacturing_cost}</li>
-                        <li>Serial Number: {inventory_item.product.serial_number}</li>
-                    </ul>
-                </li>
+                <div className="card">
+                    <div className="prod-contentbox">
+                        <li key={inventory_item.id}>Product name:{inventory_item.product.name}
+                        </li>
+                            <ul>
+                                <li>Price: ${inventory_item.price}</li>
+                                <li>Manufacturing Cost: ${inventory_item.product.manufacturing_cost}</li>
+                                <li>Serial Number: {inventory_item.product.serial_number}</li>
+                            </ul>
+                    </div>
+                </div>
             )
         })}
 
@@ -123,54 +129,66 @@ function Stores() {
 
     function displayForm() {
         return(
-            <>
+            <div className="card">
                 <h3> Edit Store </h3>
                 <form onSubmit={handleEdit} className="edit-form">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Name: </label>
                     <input
                         type="text"
                         name="name"
                         value={formData.name}
                         defaultValue={featuredStore.name}
                         onChange={handleChange}
+                        className="input-text"
                     />
-                    <label htmlFor="address">Address</label>
+                    <br/>
+                    <label htmlFor="address">Address: </label>
                     <input
                         type="text"
                         name="address"
                         value={formData.address}
                         defaultValue={featuredStore.address}
                         onChange={handleChange}
+                        className="input-text"
                     />
-                    <input type="submit" value="Submit" />
+                    <br/>
+                    <br/>
+                    <input className="buttons" type="submit" value="Submit" />
                 </form>
-            </>
+            </div>
         )
     }
 
     function displayAddForm() {
         // if (showAddForm)
         return (
-            <>
-                {/* <h3> Add a Store </h3> */}
+            <div className="card">
+                <h3>Submit new store information: </h3>
                 <form onSubmit={handlePost} className="edit-form">
-                    <label htmlFor="name">Name</label>
+                    <label htmlFor="name">Name:
+                    </label>
                     <input
                         type="text"
                         name="name"
                         value={formData.name}
                         onChange={handleChange}
+                        className="input-text"
                     />
-                    <label htmlFor="address">Address</label>
+                    <br/>
+                    <label htmlFor="address">Address:
+                    </label>
                     <input
                         type="text"
                         name="address"
                         value={formData.address}
                         onChange={handleChange}
+                        className="input-text"
                     />
-                    <input type="submit" value="Submit" />
+                    <br/>
+                    <br/>
+                    <input className="buttons" type="submit" value="Done" />
                 </form>
-            </>
+            </div>
         )
     }
 
@@ -194,27 +212,35 @@ function Stores() {
     }
 
     return (
-        <>
+        <>  
             <div>
-                {cards}
-            </div>
-            <div className="form-div">
-                    {showForm ? displayForm() : <></>}
+                <div className="rightcolumn">
+                    <div className="form-div">
+                            {showForm ? displayForm() : <></>}
+                        </div>
+                    <div>
+                        <button className="buttons" onClick={() => setShowAddForm(!showAddForm)}>Register a New Store</button>
+                        {showAddForm ? displayAddForm() : <></>}
+                    </div>
+                    {cards}
                 </div>
-            <div>
-                <button onClick={() => setShowAddForm(!showAddForm)}>Add A Store</button>
-                {showAddForm ? displayAddForm() : <></>}
             </div>
-            <div className="featured-store">
-                <h1>Stores</h1>
-                <h2>{featuredStore.name}</h2>
-
-                <h3>Revenue: ${featuredStoreRevenue}</h3>
-                <h3>Net Profit: ${featuredStoreNetProfit}</h3>
-                <h3>Products ({inventoryByStore.length}): </h3>
-                <ol>
-                    {products}
-                </ol>
+            <div className="row">
+                <div className="leftcolumn">
+                    <div className="card">
+                        <h1>Now Viewing:</h1>
+                        <h2>{featuredStore.name}</h2>
+                        <p>{featuredStore.address}</p>
+                        <div className="contentbox">
+                            <h3>Revenue: ${featuredStoreRevenue}</h3>
+                            <h3>Net Profit: ${featuredStoreNetProfit}</h3>
+                        </div>
+                            <h3>Products ({inventoryByStore.length}): </h3>
+                            <ol>
+                                {products}
+                            </ol>
+                    </div>
+                </div>
             </div>
         </>
     )
