@@ -46,19 +46,23 @@ function Stores() {
     const featuredStoreNetProfit = netProfitPerSale.reduce((partialSum, a) => partialSum + a, 0).toFixed(2) //calculate revenue for a store to 2 decimals
     // console.log(featuredStoreNetProfit)
 
-    const cards = storesArray.map((store) => {
-        // console.log(store)
-        return (
-            <div key={store.id} className="card" onClick={() => selectStore(store)}>
-                <div className="storecontentbox">
-                    <h2>{store.name}</h2>
-                    <p>{store.address}</p>
-                    <button className="cardbuttons" onClick={() => editStore(store)}>Edit</button>
-                    <button className="cardbuttons" onClick={() => deleteStore(store)}>Delete</button>
+    function createCards() {
+        const cards = storesArray.map((store) => {
+            // console.log(store)
+            return (
+                <div key={store.id} className="card" onClick={() => selectStore(store)}>
+                    <div className="storecontentbox">
+                        <h2>{store.name}</h2>
+                        <p>{store.address}</p>
+                        <button className="cardbuttons" onClick={() => editStore(store)}>Edit</button>
+                        <button className="cardbuttons" onClick={() => deleteStore(store)}>Delete</button>
+                    </div>
                 </div>
-            </div>
-        )
-    })
+            )
+        })
+        return cards
+    }
+
 
     function selectStore(store) {
         console.log("store selected")
@@ -235,13 +239,13 @@ function Stores() {
             headers: {'content-type': 'application/json'},
             body: JSON.stringify(newStore)
         })
-        // .then(resp => resp.json())
-        // .then(newStore => {
-        //     console.log(newStore)
-        //     storesArray.push(newStore)
-        // })
+        .then(resp => resp.json())
+        .then(newStore => {
+            console.log(newStore)
+            const updatedStores = [...storesArray, newStore]
+            setStoresArray(updatedStores)
+        })
         setShowAddForm(false)
-        window.location.reload(false)
     }
 
     return (
@@ -255,7 +259,7 @@ function Stores() {
                         <button className="addbutton" onClick={addStore}>Register a New Store</button>
                         {showAddForm === true ? displayAddForm() : <></>}
                     </div>
-                    {cards}
+                    {createCards()}
                 </div>
             </div>
             <div className="row">
