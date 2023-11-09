@@ -108,12 +108,12 @@ function Stores() {
             return (
                 <div className="card" key={inventory_item.id}>
                     <div className="prod-contentbox">
-                        <li key={inventory_item.id}>Product name:{inventory_item.product.name}
+                        <li key={inventory_item.id}><strong>Product name:</strong> {inventory_item.product.name}
                         </li>
                             <ul>
-                                <li>Price: ${inventory_item.price}</li>
-                                <li>Manufacturing Cost: ${inventory_item.product.manufacturing_cost}</li>
-                                <li>Serial Number: {inventory_item.product.serial_number}</li>
+                                <li><strong>Price:</strong> ${inventory_item.price}</li>
+                                <li><strong>Manufacturing Cost:</strong> ${inventory_item.product.manufacturing_cost}</li>
+                                <li><strong>Serial Number:</strong> # {inventory_item.product.serial_number}</li>
                             </ul>
                     </div>
                 </div>
