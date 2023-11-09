@@ -42,7 +42,7 @@ function Products() {
            <div className="card">
                 <div key={product.id} className="storecontentbox" onClick={() => selectProduct(product)}>
                     <h2 >{product.name}</h2>
-                    <p>Serial Number: #{product.serial_number}</p>
+                    <p>Serial Number: # {product.serial_number}</p>
                     <button className="cardbuttons" onClick={editProduct}>Edit(Patch)</button>
                     <button className="cardbuttons"onClick={() => deleteProduct(product.id)}>Delete</button>
                 </div>
@@ -79,7 +79,7 @@ function Products() {
                 <div className="leftcolumn">
                     <div className="card">
                         <h1>Now Viewing: </h1>
-                        <h3>Product: #{featuredProduct.serial_number}</h3>
+                        <h3>Product: # {featuredProduct.serial_number}</h3>
                         <div className="contentbox">
                         <h1 className="this-htag">"{featuredProduct.name}"</h1>
                         <h3>Revenue: </h3>

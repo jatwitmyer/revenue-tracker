@@ -44,7 +44,7 @@ function Sales() {
                 <div className="contentbox" key={product.id} >
                     <p>{product.name}</p>
                     <p>Manufacturing Cost: {product.manufacturing_cost}</p>
-                    <p>Serial Number: {product.serial_number}</p>
+                    <p>Serial Number: # {product.serial_number}</p>
                     <p>Units Sold: {product.sales.length}</p>
                 </div >
             </div>

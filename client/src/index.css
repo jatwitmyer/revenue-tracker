@@ -17,6 +17,8 @@ body {
   padding: 30px;
   text-align: center;
   background: white;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
 }
 
 .header h1 {
@@ -27,6 +29,8 @@ body {
 .topnav {
   overflow: hidden;
   background-color: #333;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }
 
 .this-htag {
@@ -50,7 +54,7 @@ body {
 }
 
 .topnav a:active {
-  background-color: #ffa5a5;
+  background-color: #304cd8;
   color: black;
 }
 
@@ -69,6 +73,7 @@ body {
   background-color: #f1f1f1;
   padding-left: 20px;
   margin-left: 20px;
+  border-radius: 10px;
 }
 
 /* Fake image */
@@ -77,6 +82,7 @@ body {
   width: 100%;
   padding: 20px;
   margin-right: 20px;
+  border-radius: 10px;
 }
 
 .storecontentbox {
@@ -88,6 +94,7 @@ body {
   padding-bottom: 40px;
   margin-right: 20px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .prod-contentbox {
@@ -95,6 +102,7 @@ body {
   width: 100%;
   padding: 40px;
   margin-right: 20px;
+  border-radius: 10px;
 }
 
 /* Add a card effect for articles */
@@ -102,7 +110,8 @@ body {
   background-color: white;
   padding: 20px;
   margin-top: 20px;
-  margin-right: 20px
+  margin-right: 20px;
+  border-radius: 10px;
 }
 
 /* Clear floats after the columns */
@@ -139,6 +148,7 @@ label {
   font-size: 12px;
   margin-top: 10px;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .addbutton {
@@ -150,13 +160,28 @@ label {
   margin-left: 10px;
   background-color: #5f7afe;
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .cardbuttons {
   float: right;
   height: 2rem;
-  width:auto;
+  width: auto;
   color: rgb(2, 2, 2);
   font-size: 12px;
   cursor: pointer;
+  border-radius: 10px;
+}
+
+/* Button Hover Effects */
+.cardbuttons:hover {
+  background-color: #304cd8;
+}
+
+.addbutton:hover {
+  background-color: #304cd8;
+}
+
+.buttons:hover {
+  background-color: #304cd8;
 }
