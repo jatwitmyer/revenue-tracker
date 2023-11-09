@@ -46,23 +46,35 @@ function Stores() {
     const featuredStoreNetProfit = netProfitPerSale.reduce((partialSum, a) => partialSum + a, 0).toFixed(2) //calculate revenue for a store to 2 decimals
     // console.log(featuredStoreNetProfit)
 
-    const cards = storesArray.map((store) => {
-        // console.log(store)
-        return (
-            <div key={store.id} className="card" onClick={() => selectStore(store)}>
-                <div className="storecontentbox">
-                    <h2>{store.name}</h2>
-                    <p>{store.address}</p>
-                    <button className="cardbuttons" onClick={() => editStore(store)}>Edit</button>
-                    <button className="cardbuttons" onClick={deleteStore}>Delete</button>
+    function createCards() {
+        const cards = storesArray.map((store) => {
+            // console.log(store)
+            return (
+                <div key={store.id} className="card" onClick={() => selectStore(store)}>
+                    <div className="storecontentbox">
+                        <h2>{store.name}</h2>
+                        <p>{store.address}</p>
+                        <button className="cardbuttons" onClick={() => editStore(store)}>Edit</button>
+                        <button className="cardbuttons" onClick={() => deleteStore(store)}>Delete</button>
+                    </div>
                 </div>
-            </div>
-        )
-    })
+            )
+        })
+        return cards
+    }
+
 
     function selectStore(store) {
         console.log("store selected")
         setFeaturedStore(store)
+    }
+
+    function addStore() {
+        setShowAddForm(true)
+        setFormData({
+            name: "",
+            address: ""
+        })
     }
 
     function editStore(store) {
@@ -76,8 +88,18 @@ function Stores() {
         
     }
 
-    function deleteStore() {
-        console.log("delete selected")
+    function deleteStore(store) {
+        console.log(store.id)
+        fetch(`/stores/${store.id}`, {
+            method: "DELETE"
+        })
+        const updatedStores = []
+        storesArray.forEach(item => {
+            if (item.id !== store.id) {
+                updatedStores.push(item)
+            }
+        })
+        setStoresArray(updatedStores)
     }
 
     let products = <li></li>
@@ -160,7 +182,8 @@ function Stores() {
                     />
                     <br/>
                     <br/>
-                    <input className="buttons" type="submit" value="Submit" />
+                    <input className="buttons" type="submit" value="Submit"/>
+                    <input className="buttons" type="button" value="Cancel" onClick={() => setShowForm(false)}/>
                 </form>
             </div>
         )
@@ -178,6 +201,7 @@ function Stores() {
                         type="text"
                         name="name"
                         value={formData.name}
+                        defaultValue={""}
                         onChange={handleChange}
                         className="input-text"
                     />
@@ -188,12 +212,14 @@ function Stores() {
                         type="text"
                         name="address"
                         value={formData.address}
+                        defaultValue={""}
                         onChange={handleChange}
                         className="input-text"
                     />
                     <br/>
                     <br/>
-                    <input className="buttons" type="submit" value="Done" />
+                    <input className="buttons" type="submit" value="Submit" />
+                    <input className="buttons" type="button" value="Cancel" onClick={() => setShowAddForm(false)}/>
                 </form>
             </div>
         )
@@ -216,8 +242,8 @@ function Stores() {
         .then(resp => resp.json())
         .then(newStore => {
             console.log(newStore)
-            storesArray.push(newStore)
-            // setStoresArray(updatedStores)
+            const updatedStores = [...storesArray, newStore]
+            setStoresArray(updatedStores)
         })
         setShowAddForm(false)
     }
@@ -227,13 +253,13 @@ function Stores() {
             <div>
                 <div className="rightcolumn">
                     <div className="form-div">
-                            {showForm ? displayForm() : <></>}
+                            {showForm === true ? displayForm() : <></>}
                         </div>
                     <div>
-                        <button className="addbutton" onClick={() => setShowAddForm(!showAddForm)}>Register a New Store</button>
-                        {showAddForm ? displayAddForm() : <></>}
+                        <button className="addbutton" onClick={addStore}>Register a New Store</button>
+                        {showAddForm === true ? displayAddForm() : <></>}
                     </div>
-                    {cards}
+                    {createCards()}
                 </div>
             </div>
             <div className="row">
