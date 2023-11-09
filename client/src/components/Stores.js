@@ -96,7 +96,6 @@ function Stores() {
             }
         })
         setStoresArray(updatedStores)
-        // window.location.reload(false)
     }
 
     let products = <li></li>
