@@ -233,7 +233,7 @@ function Stores() {
                         <p>{featuredStore.address}</p>
                         <div className="contentbox">
                             <h3>Revenue: ${featuredStoreRevenue}</h3>
-                            <h3>Net Profit: ${featuredStoreNetProfit}</h3>
+                            <h3>Net Profit: {Math.sign(featuredStoreNetProfit) === -1 ? "-$" + Math.abs(featuredStoreNetProfit) : "$" + featuredStoreNetProfit}</h3>
                         </div>
                             <h3>Products ({inventoryByStore.length}): </h3>
                             <ol>
