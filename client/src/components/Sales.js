@@ -121,7 +121,7 @@ function Sales() {
     <div className="row">
         <div className="leftcolumn">
             <div className="card">
-                <h2>Company Name</h2>
+                <h2>Company Name: Bell, Wallace and Martinez</h2>
                 <h5>Welcome, employee</h5>
                     <div className="scrollable-content">
                     <ol >
