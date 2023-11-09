@@ -141,18 +141,18 @@ label {
 
 .addbutton {
   height: 2rem;
-  width: 60%;
+  width: 90%;
   color: rgb(2, 2, 2);
-  font-size: 12px;
+  font-size: 22px;
   margin-top: 20px;
-  margin-left: 50px;
+  margin-left: 10px;
   background-color: #5f7afe
 }
 
 .cardbuttons {
   float: right;
   height: 2rem;
-  width: 30%;
+  width:auto;
   color: rgb(2, 2, 2);
   font-size: 12px;
 }
