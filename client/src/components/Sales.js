@@ -121,9 +121,11 @@ function Sales() {
             <div className="card">
                 <h2>Company Name</h2>
                 <h5>Welcome, employee</h5>
-                <ol >
-                    {viewContent}
-                </ol>
+                    <div className="scrollable-content">
+                    <ol >
+                        {viewContent}
+                    </ol>
+                </div>
             </div>
         </div>
     </div>
