@@ -39,7 +39,7 @@ function Products() {
     const cards = products.map((product) => {
         // console.log(product)
         return (
-           <div className="card">
+            <div className="card">
                 <div key={product.id} className="storecontentbox" onClick={() => selectProduct(product)}>
                     <h2 >{product.name}</h2>
                     <p>Serial Number: # {product.serial_number}</p>
@@ -79,7 +79,7 @@ function Products() {
             </div>
             <div className="row">
                 <div className="leftcolumn">
-                    <div className="card">
+                    <div className="card details">
                         <h1>Now Viewing: </h1>
                         <h3>Product: # {featuredProduct.serial_number}</h3>
                         <div className="contentbox">

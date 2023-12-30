@@ -12,7 +12,6 @@
       "react-router-dom": "5.3.4",
       "react-scripts": "5.0.1",
       "web-vitals": "^2.1.4"
-      // "@babel/plugin-proposal-private-property-in-object": "*"
     },
     "scripts": {
       "start": "react-scripts start",

@@ -118,10 +118,10 @@ function Sales() {
     </div>
     <div className="row">
         <div className="leftcolumn">
-            <div className="card">
+            <div className="card details">
                 <h2>Company Name</h2>
-                <h5>Welcome, employee</h5>
-                    <div className="scrollable-content">
+                {/* <h5>Welcome, employee</h5> */}
+                    <div>
                     <ol >
                         {viewContent}
                     </ol>

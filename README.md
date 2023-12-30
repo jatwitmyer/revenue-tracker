@@ -16,11 +16,10 @@ open a Terminal and type the following in order:
 2. $ cd server
 3. $ export FLASK_APP=app.py
 4. $ python app.py --- to get the program started once in the shell environment
-5. Open a second terminal and cd out of server into the revenue-tracker directory
+5. Open a second terminal
 
 # Running the Client
 1. $ cd client
-2. $ npm install
-3. $ npm start
+2. $ npm install && npm start
 
 # Thank you!!

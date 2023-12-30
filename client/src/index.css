@@ -14,7 +14,7 @@ body {
 
 /* Header/Blog Title */
 .header {
-  padding: 30px;
+  padding: 10px;
   text-align: center;
   background: white;
   border-top-right-radius: 10px;
@@ -43,7 +43,7 @@ body {
   display: block;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 16px;
+  padding: 24px 26px;
   text-decoration: none;
 }
 
@@ -61,9 +61,9 @@ body {
 /* Create two unequal columns that floats next to each other */
 /* Left column */
 .leftcolumn {
-  float: left;
-  width: 70%; 
-  margin-left: 20px; 
+  float: right;
+  width: 73%; 
+  height: 70vh;
   /* overflow-y: scroll;Add margin to the right side to create space */
 }
 .scrollable-content {
@@ -71,10 +71,20 @@ body {
   overflow-y: scroll; 
 }
 
+/* .tab-content {
+  position: relative;
+  height: 70vh;
+} */
+
+.details {
+  height: 70vh;
+}
+
 .rightcolumn {
   margin-top: 20px;
   float: left;
   width: 25%;
+  height: 70vh;
   background-color: #f1f1f1;
   padding-left: 20px;
   margin-left: 20px;

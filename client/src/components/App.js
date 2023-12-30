@@ -10,6 +10,7 @@ function App() {
     return (
         <div className="App">
             <NavBar />
+            <div className="tab-content">
             <Switch>
                 <Route exact path="/sales">
                     <Sales />
@@ -21,6 +22,7 @@ function App() {
                     <Products />
                 </Route>
             </Switch>
+            </div>
         </div>
     );
 }

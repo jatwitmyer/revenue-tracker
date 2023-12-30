@@ -264,7 +264,7 @@ function Stores() {
             </div>
             <div className="row">
                 <div className="leftcolumn">
-                    <div className="card">
+                    <div className="card details">
                         <h1>Now Viewing:</h1>
                         <h2>{featuredStore.name}</h2>
                         <p>{featuredStore.address}</p>
