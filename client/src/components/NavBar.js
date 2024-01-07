@@ -5,8 +5,9 @@ function NavBar() {
 
     return (
         <div className = "topnav">
-            <img src="SeekPng.com_dollar-sign-png_4035489.png" alt="" title=""/>
-            {/* <i class="fa fa-usd" aria-hidden="true"></i> */}
+            <div className="logo-div">
+                <img src="SeekPng.com_dollar-sign-png_4035489.png" alt="Logo" title="Logo"/>
+            </div>
             <NavLink className="left-nav" to="/overview">Overview</NavLink>
             <p>Revenue Tracker</p>
             <a className="right-nav" href="/">Log Out</a>
