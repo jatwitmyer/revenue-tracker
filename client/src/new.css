@@ -1,14 +1,15 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(25, 27, 30);
+  background-color: rgb(241, 240, 240);
   margin: 0;
+  color: black;
 }
 
 /* -------------------------------------------------------------- */
 /* Nav Bar */
 
 .topnav {
-  background-color: rgb(57, 62, 69);
+  background-color: rgb(194, 195, 197);
   overflow: hidden;
   margin: 0;
   padding: 4px;
@@ -22,8 +23,8 @@ body {
   float: left;
   display: inline;
   margin: 9px;
-  margin-right: 0;
-  filter: invert(100%);
+  /* margin-right: 0; */
+  /* filter: invert(100%); */
   position: relative;
 }
 
@@ -39,7 +40,8 @@ body {
 
 /* website title */
 .topnav p {
-  color: #f2f2f2;
+  /* color: #f2f2f2; */
+  color: black;
   text-align: center;
   font-size: 21px;
   text-decoration: none;
@@ -62,15 +64,18 @@ body {
 }
 
 .topnav a {
-  color: #f2f2f2;
-  margin: 14px 20px;
+  /* color: #f2f2f2; */
+  color: black;
+  padding: 14px 20px;
   text-decoration: none;
   font-size: 17px;
   display: inline;
 }
 
 .topnav a:hover {
-  color: rgb(197, 197, 197);
+  /* color: rgb(88, 88, 88); */
+  background-color: rgba(219, 219, 227, 0.468);
+  border-radius: 15px;
 }
 
 .topnav a.active {
@@ -99,8 +104,79 @@ body {
 /* filters */
 
 /* summary */
-.profit-summary-container h1, button{
-  display: inline;
+.save-summary-button{
+  position: absolute;
+  right: 5vw;
+  top: 6%;
+  background: linear-gradient(to bottom right, #113F8C, #01A4A4);
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 4px;
+  padding: 9px 16px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
 }
+
+.blue {
+  background: linear-gradient(to bottom right, #113F8C, #01A4A4);
+}
+
+.green {
+  background: linear-gradient(to bottom right, #61AE24, #D0D102);
+}
+
+.red {
+  background: linear-gradient(to bottom right, #D70060, #F18D05);
+}
+
+.border-gradient {
+  margin: auto;
+  padding: 4.5px;
+  margin-top: 30px;
+  border-radius: 15px;
+  width: fit-content;
+  margin-bottom: 30px;
+}
+
+.profit-summary-container, .profitability-charts-container{
+  position: relative;
+  background-color: rgb(235, 237, 242);
+  width: 60vw;
+  padding: 20px 30px;
+  margin: auto;
+  min-width: 600px;
+  border-radius: 15px;
+}
+
+.profit-summary-container h1, .profitability-charts-container h1{
+  margin-top: 0;
+  margin-left: 5vw;
+}
+
+.profit-summary-container table{
+  margin: auto;
+}
+
+table{
+  border-collapse: collapse;
+  margin: 25px 0;
+}
+
+.profit-summary-container table{
+  min-width: 280px;
+  font-size: x-large;
+}
+
+td.price{
+  text-align: right;
+}
+
+tr.total{
+  border-top: 3px solid;
+}
+
+
 
 /* saved-summaries */
