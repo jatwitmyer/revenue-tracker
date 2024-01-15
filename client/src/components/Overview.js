@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
-import PSSpreadsheet from './PSSpreadsheet';
+import PSTable from './PSTable';
+import MPTable from './MPTable';
 
 function Overview() {
 
@@ -16,24 +17,30 @@ function Overview() {
           {/* profit summary */}
           <div className="border-gradient blue">
           <div className="profit-summary-container">
-            <button className="save-summary-button">Save</button>
+            {/* <button className="save-summary-button blue">Save</button> */}
             <h1 className="summary-header">Profit Summary</h1>
-            <div className="profit-summary-spreadsheet-container">
-              <PSSpreadsheet/>
+            <div className="profit-summary-table-container">
+              <PSTable/>
             </div>
           </div>
           </div>
 
           {/* profitability charts */}
-          <div className="border-gradient red">
+          <div className="border-gradient blue">
           <div className="profitability-charts-container">
             <h1 className="summary-header">Most Profitable</h1>
             <div className="most-profitable-columns-container">
-              <div className="stores-column">
-                <div className="stores-spreadsheet-container"> <></> </div>
+              <div className="stores-column mp-table-container">
+                <div className="stores-table-container">
+                  <p>stores</p>
+                  <MPTable/>
+                </div>
               </div>
-              <div className="products-column">
-                <div className="products-spreadsheet-container"></div>
+              <div className="products-column mp-table-container">
+                <div className="products-table-container">
+                  <p>products</p>
+                  <MPTable/>
+                </div>
               </div>
             </div>
           </div>
