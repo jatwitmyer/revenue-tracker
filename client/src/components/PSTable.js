@@ -5,6 +5,7 @@ function PSSpreadsheet() {
 
   return (
   <table>
+    <tbody>
     <tr>
       <td>Revenue</td>
       <td className="price">$ 0,000</td>
@@ -17,6 +18,7 @@ function PSSpreadsheet() {
       <td>Gross Profit</td>
       <td className="price">$ 0,000</td>
     </tr>
+    </tbody>
   </table>
   )}
 

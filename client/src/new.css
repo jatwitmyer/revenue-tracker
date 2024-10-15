@@ -1,6 +1,6 @@
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: rgb(241, 240, 240);
+  background-color: rgb(255, 255, 255);
   margin: 0;
   color: black;
   overflow: auto;
@@ -150,7 +150,7 @@ body {
 
 .profit-summary-container, .profitability-charts-container{
   position: relative;
-  background-color: rgb(235, 237, 242);
+  background-color: white;
   padding: 4.5px;
   width: auto;
   /* margin: auto; */
@@ -161,7 +161,9 @@ body {
 .profit-summary-container h1, .profitability-charts-container h1{
   margin-top: 0;
   margin-left: 2vw;
+  margin-right: 2vw;
   padding-top: 20px;
+  border-bottom: solid 2px #000000bb;
 }
 
 .profit-summary-container table{
@@ -192,25 +194,66 @@ tr.total{
 
 /* most profitable section (2 columns of tables) */
 .most-profitable-columns-container{
-  border: solid rgb(18, 78, 124) 1px;
-  /* position: fixed; */
+  /* border: solid rgb(18, 78, 124) 1px; */
+  margin-left: 2vw;
+  margin-right: 2vw;
   display: flex;
-  width: 100%;
-  /* height: 100vh; */
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-start;
+  padding-bottom: 20px;
+  gap: 20px;
 }
 
 .mp-table-container {
-  border: solid red 1px;
+  /* border: solid red 1px; */
   flex-grow: 1;
-  margin: 5px;
+  /* margin: 5px; */
 }
 
-.mp-table table, .mp-table th, .mp-table td {
+.mp-table-container h2 {
+  text-align: center;
+  margin: 0;
+}
+
+.mp-table{
+  width: 100%;
+  margin: 0;
+  margin-top: 10px;
   border: solid 1px;
+}
+
+.mp-table th, .mp-table td {
+  border: solid 2px;
   padding: 4px;
+}
+
+/* sortability feature */
+.sortable th{
+  cursor: pointer;
+}
+
+.sortable .th-sort-asc::after {
+	content: "\25b4";
+  color: black;
+}
+
+.sortable .th-sort-desc::after {
+	content: "\25be";
+  color: black;
+}
+
+.sortable .th-sort-asc::after,
+.sortable .th-sort-desc::after {
+	margin-left: 5px;
+}
+
+.sortable th{background-color: #24a0cd60}
+.sortable tr:nth-child(even){background-color: #68c9ec47}
+
+.more-details {
+  cursor: pointer;
+  text-decoration: underline;
 }
 
 /* saved-summaries */
